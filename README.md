@@ -1,24 +1,27 @@
 # Learn Vim (the Smart Way)
 
+## Language
+ [[简体中文](./README_CH.md)]
+
 ## What is this about?
 *Learn Vim (the Smart Way)* is a book to learn the good parts of Vim.
 
 ## Table Of Contents (In Progress)
 - Ch 0     - Learn Vim the Smart Way
 - Ch 1     - Starting Out
-- [Ch 2     - Buffers, Windows, and Tabs](./ch02_buffers_windows_tabs.md)
-- [Ch 3     - Opening and Searching Files](./ch03_opening_and_searching_files.md)
-- [Ch 4     - Vim Grammar](./ch04_vim_grammar.md)
-- [Ch 5     - Moving in a File](./ch05_moving_in_file.md)
-- [Ch 6     - Insert Mode](./ch06_insert_mode.md)
-- [Ch 7     - The Dot command](./ch07_the_dot_command.md)
-- [Ch 8     - Registers](./ch08_registers.md)
-- [Ch 9     - Macros](./ch09_macros.md)
-- [Ch 10    - Undo](./ch10_undo.md)
-- [Ch 11    - Visual Mode](./ch11_visual_mode.md)
-- [Ch 12    - Search and Substitute](./ch12_search_and_substitute.md)
-- [Ch 13    - The Global Command](./ch13_the_global_command.md)
-- [Ch 14    - External Commands](./ch14_external_commands.md)
+- [Ch 2     - Buffers, Windows, and Tabs](./eng/ch02_buffers_windows_tabs.md)
+- [Ch 3     - Opening and Searching Files](./eng/ch03_opening_and_searching_files.md)
+- [Ch 4     - Vim Grammar](./eng/ch04_vim_grammar.md)
+- [Ch 5     - Moving in a File](./eng/ch05_moving_in_file.md)
+- [Ch 6     - Insert Mode](./eng/ch06_insert_mode.md)
+- [Ch 7     - The Dot command](./eng/ch07_the_dot_command.md)
+- [Ch 8     - Registers](./eng/ch08_registers.md)
+- [Ch 9     - Macros](./eng/ch09_macros.md)
+- [Ch 10    - Undo](./eng/ch10_undo.md)
+- [Ch 11    - Visual Mode](./eng/ch11_visual_mode.md)
+- [Ch 12    - Search and Substitute](./eng/ch12_search_and_substitute.md)
+- [Ch 13    - The Global Command](./eng/ch13_the_global_command.md)
+- [Ch 14    - External Commands](./eng/ch14_external_commands.md)
 - Ch 15    - Command Line Mode
 - Ch 16    - Tags
 - Ch 17    - Git
