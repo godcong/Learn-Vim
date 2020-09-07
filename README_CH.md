@@ -1,35 +1,35 @@
-# Learn Vim (the Smart Way)
+# 学习Vim（智能方式）
 
-## Language
+## 语言
  [[English](./README.md)]
 
-## What is this about?
-*Learn Vim (the Smart Way)* is a book to learn the good parts of Vim.
+## 这是什么?
+*学习Vim（智能方式）* 是一本优秀的学习Vim知识的书。
 
-## Table Of Contents (In Progress)
-- Ch 0     - Learn Vim the Smart Way
-- Ch 1     - Starting Out
-- [Ch 2     - Buffers, Windows, and Tabs](./chs/ch02_buffers_windows_tabs.md)
-- [Ch 3     - Opening and Searching Files](./chs/ch03_opening_and_searching_files.md)
-- [Ch 4     - Vim Grammar](./chs/ch04_vim_grammar.md)
-- [Ch 5     - Moving in a File](./chs/ch05_moving_in_file.md)
-- [Ch 6     - Insert Mode](./chs/ch06_insert_mode.md)
-- [Ch 7     - The Dot command](./chs/ch07_the_dot_command.md)
-- [Ch 8     - Registers](./chs/ch08_registers.md)
-- [Ch 9     - Macros](./chs/ch09_macros.md)
-- [Ch 10    - Undo](./chs/ch10_undo.md)
-- [Ch 11    - Visual Mode](./chs/ch11_visual_mode.md)
-- [Ch 12    - Search and Substitute](./chs/ch12_search_and_substitute.md)
-- [Ch 13    - The Global Command](./chs/ch13_the_global_command.md)
-- [Ch 14    - External Commands](./chs/ch14_external_commands.md)
-- Ch 15    - Command Line Mode
-- Ch 16    - Tags
+## 目录（进行中）
+- Ch 0     - 聪明地学习Vim
+- Ch 1     - 起步
+- [Ch 2     - 缓冲区，窗口和选项卡](./chs/ch02_buffers_windows_tabs.md)
+- [Ch 3     - 打开和搜索文件](./chs/ch03_opening_and_searching_files.md)
+- [Ch 4     - Vim语法](./chs/ch04_vim_grammar.md)
+- [Ch 5     - 移动文件](./chs/ch05_moving_in_file.md)
+- [Ch 6     - 插入模式](./chs/ch06_insert_mode.md)
+- [Ch 7     - 点命令](./chs/ch07_the_dot_command.md)
+- [Ch 8     - 寄存器](./chs/ch08_registers.md)
+- [Ch 9     - 宏](./chs/ch09_macros.md)
+- [Ch 10    - 撤消](./chs/ch10_undo.md)
+- [Ch 11    - 视觉模式](./chs/ch11_visual_mode.md)
+- [Ch 12    - 搜索和替换](./chs/ch12_search_and_substitute.md)
+- [Ch 13    - 全局命令](./chs/ch13_the_global_command.md)
+- [Ch 14    - 外部命令](./chs/ch14_external_commands.md)
+- Ch 15    - 命令行模式
+- Ch 16    - 标签
 - Ch 17    - Git
-- Ch 18    - Fold
-- Ch 19    - Compile
+- Ch 18    - 折叠
+- Ch 19    - 编译
 
-# License & Copyright
-The materials here are all ©2020 Igor Irianto.
+# 许可和版权
+这些材料全部归©2020 Igor Irianto所有。
 
 <a rel="license" href="http://creativecommons.org/licenses/by-nc-nd/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by-nc-nd/4.0/88x31.png" /></a><br />
 
