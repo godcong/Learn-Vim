@@ -1,7 +1,7 @@
 # Learn Vim (the Smart Way)
 
 ## Language
- [[简体中文](./README_CH.md)]
+ [[简体中文](README_zh-CN.md)]
 
 ## What is this about?
 *Learn Vim (the Smart Way)* is a book to learn the good parts of Vim.
