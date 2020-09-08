@@ -1,24 +1,24 @@
-# The Global Command
+＃全局命令
 
-So far you have learned how to repeat the last change with the dot command (`.`), to replay actions with macros (`q`), and to store texts in the registers (`"`). 
+到目前为止，您已经了解了如何使用点命令(`.`)重复上一次更改，如何使用宏(`q`)重播动作以及将文本存储在寄存器中(`"`)。
 
-In this chapter, you will learn how to repeat a command-line command with the global command. Run once, apply everywhere (in a buffer).
+在本章中，您将学习如何在全局命令中重复命令行命令。运行一次，应用于任何地方（在缓冲区中）。
 
-# Global Command Overview
+＃全局命令概述
 
-Vim's global command is used to running a command-line command on multiple lines simultaneously. 
+Vim的全局命令用于同时在多行上运行命令行命令。
 
-By the way, you may have heard of the term "Ex Commands" before. In this book, I refer them as command-line commands, but both Ex commands and command-line commands are the same. They are the commands that start with a colon (`:`). In the last chapter, you learned about the substitute command. It was an example of an Ex command. They are called Ex because they originally came from the Ex text editor. I will continue to refer to them as command-line commands in this book. For a full list of Ex commands, check out `:h ex-cmd-index`.
+顺便说一句，您之前可能已经听说过“ Ex Commands”一词。在本书中，我将它们称为命令行命令，但Ex命令和命令行命令是相同的。它们是以冒号（`：`）开头的命令。在上一章中，您了解了替代命令。这是一个Ex命令的示例。它们之所以称为Ex，是因为它们最初来自Ex文本编辑器。在本书中，我将继续将它们称为命令行命令。有关Ex命令的完整列表，请查看`：h ex-cmd-index`。
 
-The global command has the following syntax:
+全局命令具有以下语法：
 
 ```
 :g/pattern/command
 ```
 
-The `pattern` matches all lines containing that pattern, similar to the pattern in the substitute command. The `command` can be any command-line command. The global command works by executing `command` against each line that matches the `pattern`.
+'pattern'匹配包含该模式的所有行，类似于替代命令中的模式。命令可以是任何命令行命令。全局命令通过对与“模式”匹配的每一行执行“命令”来工作。
 
-If you have the following expressions:
+如果您具有以下表达式：
 
 ```
 const one = 1;
@@ -31,13 +31,13 @@ const three = 3;
 console.log("three: ", three);
 ```
 
-To remove all lines containing "console", you can run:
+要删除所有包含“控制台”的行，可以运行：
 
 ```
 :g/console/d
 ```
 
-Result:
+结果：
 
 ```
 const one = 1;
@@ -47,17 +47,17 @@ const two = 2;
 const three = 3;
 ```
 
-The global command executes the delete command (`d`) on all lines that match the "console" pattern.
+全局命令在与“控制台”模式匹配的所有行上执行删除命令(`d`)。
 
-When running the `g` command, Vim  makes two scans across the file. On the first run, it scans each line and marks the line that matches the `/console/` pattern. Once all the matching lines are marked, it makes the second run, where it executes the `d` command on the marked lines.
+运行`g`命令时，Vim对文件进行两次扫描。在第一次运行时，它将扫描每行并标记与`/console/`模式匹配的行。一旦所有匹配的行都被标记，它将进行第二次运行，并在标记的行上执行d命令。
 
-If you want to delete all lines containing "const" instead, run:
+如果要删除所有包含“ const”的行，请运行：
 
 ```
 :g/const/d
 ```
 
-Result:
+结果：
 
 ```
 console.log("one: ", one);
@@ -67,27 +67,27 @@ console.log("two: ", two);
 console.log("three: ", three);
 ```
 
-# Inverse Match
+＃逆向比赛
 
-To run the global command on non-matching lines, you can run:
+要在不匹配的行上运行全局命令，可以运行：
 
 ```
 :g!/{pattern}/{command}
 ```
 
-or
+要么
 
 ```
 :v/{pattern}/{command}
 ```
 
-If you run `:v/console/d`, it will delete all lines *not* containing "console".
+如果运行`:v/console/d`，它将删除* not *包含“ console”的所有行。
 
-# Pattern
+＃模式
 
-The global command uses the same pattern system as the substitute command, so this section will serve as a refresher.  Feel free to skip to the next section or read along!
+全局命令使用与替代命令相同的模式系统，因此本节将作为更新。随意跳到下一部分或继续阅读！
 
-If you have these expressions:
+如果您具有以下表达式：
 
 ```
 const one = 1;
@@ -100,25 +100,25 @@ const three = 3;
 console.log("three: ", three);
 ```
 
-To delete the lines containing either "one" or "two", run:
+要删除包含“一个”或“两个”的行，请运行：
 
 ```
 :g/one\|two/d
 ```
 
-To delete the lines containing any single digits, run either:
+要删除包含任何一位数字的行，请运行以下任一命令：
 
 ```
 :g/[0-9]/d
 ```
 
-or
+要么
 
 ```
 :g/\d/d
 ```
 
-If you have the expression:
+如果您有表达式：
 
 ```
 const oneMillion = 1000000;
@@ -126,33 +126,33 @@ const oneThousand = 1000;
 const one = 1;
 ```
 
-To match the lines containing between three to six zeroes, run:
+要匹配包含三到六个零的行，请运行：
 
 ```
 :g/0\{3,6\}/d
 ```
 
-# Passing a Range
+＃传递范围
 
-You can pass a range before the `g` command. Here are some ways you can do it:
+您可以在`g`命令之前传递一个范围。您可以通过以下几种方法来做到这一点：
 
-- `:1,5/g/console/d`  matches the string "console" between lines 1 and 5 and deletes them.
-- `:,5/g/console/d` if there is no address before the comma, then it starts from the current line. It looks for the string "console" between the current line and line 5 and deletes them.
-- `:3,/g/console/d` if there is no address after the comma, then it ends at the current line. It looks for the string "console" between line 3 and the current line and deletes them.
-- `:3g/console/d` if you only pass one address without a comma, it executes the command only on line 3. It looks on line 3 and deletes it if has the string "console".
+- `:1,5/g/console/d`  在第1行和第5行之间匹配字符串"console"并将其删除。
+- `:,5/g/console/d` 如果逗号前没有地址，则从当前行开始。它在当前行和第5行之间寻找字符串"console"并将其删除。
+- `:3,/g/console/d` 如果逗号后没有地址，则在当前行结束。它在第3行和当前行之间寻找字符串"console"并将其删除。
+- `:3g/console/d` 如果只传递一个地址而不带逗号，则仅在第3行执行命令。在第3行查找，如果字符串为"console"，则将其删除。
 
-In addition to numbers, you can also use these symbols as range:
-- `.` means the current line. A range of `.,3` means between the current line and line 3.
-- `$` means the last line in the file. `3,$` range means between line 3 and the last line.
-- `+n` means n lines after the current line. You can use it with `.` or without. `3,+1` or `3,.+1` means between line 3 and the line after the current line.
+除了数字，您还可以将这些符号用作范围：
+- `.` 表示当前行。范围`.,3`表示当前行和第3行之间。
+- `$` 表示文件的最后一行。 `3,$`范围表示在第3行和最后一行之间。
+- `+n` 表示当前行之后的n行。您可以将其与`.`结合使用，也可以不结合使用。  `3,+1`或`3,.+1`表示在第3行和当前行之后的行之间。
 
-If you don't give it any range, by default it affects the entire file. This is actually not the norm. Most of Vim's command-line commands run on only the current line if you don't pass it any range. The two notable exceptions are the global (`:g`) and the save (`:w`) commands. 
+如果您不给它任何范围，默认情况下它将影响整个文件。这实际上不是常态。如果您不传递任何范围，Vim的大多数命令行命令仅在当前行上运行。两个值得注意的例外是全局（`：g`）和save（`：w`）命令。
 
-# Normal Command
+＃普通命令
 
-You can run a normal command with the global command with `:normal` command-line command.
+您可以将全局命令和`：normal`命令行命令一起运行。
 
-If you have this text:
+如果您有以下文字：
 ```
 const one = 1;
 console.log("one: ", one);
@@ -164,19 +164,19 @@ const three = 3;
 console.log("three: ", three);
 
 ```
-To add a ";" to the end of each line, run:
+要添加";"运行到每一行的末尾：
 ```
 :g/./normal A;
 ```
 
-Let's break it down:
-- `:g` is the global command.
-- `/./` is a pattern for "non-empty lines". Recall that the dot (`.`) in regex represents *any character*. It matches the lines with at least one character, so it matches the lines with "const" and "console". It does not match empty lines.
-- `normal A;` runs the `:normal` command-line command. `A;` is the normal mode command to insert a ";" at the end of the line.
+让我们分解一下：
+- `:g` 是全局命令。
+- `/./` 是“非空行”的模式。回想一下正则表达式中的点（`.`）表示*任何字符*。它将行与至少一个字符匹配，因此将行与“ const”和“ console”匹配。它不匹配空行。
+- `normal A;` 运行`:normal`命令行命令。 `A;` 是普通模式命令，用于在该行的末尾插入";"。
 
-# Executing a Macro
+＃执行宏
 
-You can also execute a macro with the global command. A macro is just a normal mode operation, so it is possible to execute a macro with `:normal`. If you have the expressions:
+您也可以使用全局命令执行宏。宏只是普通模式下的操作，因此可以使用：normal来执行宏。如果您有以下表达式：
 
 ```
 const one = 1
@@ -189,19 +189,19 @@ const three = 3
 console.log("three: ", three);
 ```
 
-Notice that the lines with "const" do not have semi-colons. Let's create a macro to add a comma to the end of those lines in the register "a":
+请注意，带有"const"的行没有分号。让我们创建一个宏，以在寄存器"a"的这些行的末尾添加逗号：
 
 ```
 qa0A;<esc>q
 ```
 
-If you need a refresher, check out the chapter on macro. Now run:
+如果您需要复习，请查看有关宏的章节。现在运行：
 
 ```
 :g/const/normal @a
 ```
 
-Now all lines with "const" will have a ";" at the end.
+现在，所有带有"const"的行都将带有";"在末尾。
 
 ```
 const one = 1;
@@ -214,11 +214,11 @@ const three = 3;
 console.log("three: ", three);
 ```
 
-# Recursive Global Command
+＃递归全局命令
 
-The global command itself is a type of a command-line command, so you can technically run the global command inside a global command.
+全局命令本身是命令行命令的一种，因此您可以从技术上在全局命令中运行全局命令。
 
-Given the expressions:
+给定表达式：
 
 ```
 const one = 1;
@@ -231,89 +231,88 @@ const three = 3;
 console.log("three: ", three);
 ```
 
-If you run:
+如果您运行：
 
 ```
 :g/console/g/two/d
 ```
 
-First, `g` will look for the lines containing the pattern "console" and find 3 matches. Then the second `g` will look for the line containing the pattern "two" from those three matches. Finally, it will delete that match.
+首先，“ g”将查找包含模式“ console”的行，并找到3个匹配项。然后，第二个“ g”将从那三个匹配项中查找包含模式“ two”的行。最后，它将删除该匹配项。
 
-You can also combine `g` with `v` to find positive and negative patterns. For example:
+您也可以将“ g”与“ v”结合使用以找到正负模式。例如：
 
 ```
 :g/console/v/two/d
 ```
 
-Instead of looking for the line containing the pattern "two", it will look for the lines *not* containing the pattern "two".
+而不是查找包含模式"two"的行，它将查找*不*包含模式"two"的行。
 
-# Changing the Delimiter
+＃更改定界符
 
-You can change the global command's delimiter like the substitute command. The rules are the same: you can use any single byte character except for alphabets, numbers, `"`, `|`, and `\`.
+您可以像替代命令一样更改全局命令的定界符。规则是相同的：您可以使用任何单字节字符，但字母，数字，`"`, `|`, 和 `\`除外。
 
-To delete the lines containing "console":
+要删除包含"console"的行：
 
 ```
 :g@console@d
 ```
 
-If you are using the substitute command with the global command, you can have two different delimiters:
+如果在全局命令中使用替代命令，则可以有两个不同的定界符：
 
 ```
 g@one@s+const+let+g
 ```
 
-Here the global command will look for all lines containing "one". The substitute command will substitute, from those matches, the string "const" with "let".
+此处，全局命令将查找包含“一个”的所有行。 replace命令将从这些匹配项中将字符串"const"替换为"let"。
 
-# The Default Command
+＃默认命令
 
-What happens if you don't specify any command-line command in the global command? 
+如果在全局命令中未指定任何命令行命令，会发生什么？
 
-The global command will use the print (`:p`) command to print the current line's text. If you run:
+全局命令将使用打印(`:p`)命令来打印当前行的文本。如果您运行：
 
 ```
 :g/console
 ```
 
-It will print at the bottom of the screen all the lines containing "console".
+它将在屏幕底部打印所有包含"console"的行。
 
-By the way, here is one interesting fact. Because the default command used by the global command is `p`, this makes the `g` syntax to be:
+顺便说一下，这是一个有趣的事实。因为全局命令使用的默认命令是`p`，所以这使`g`语法为：
 
 ```
 :g/re/p
 ```
+- `g` =全局命令
+- `re` =正则表达式模式
+- `p` =打印命令
 
-- `g` = the global command
-- `re` = the regex pattern
-- `p` = the print command
+它拼写*"grep"*，与命令行中的`grep`相同。这不是巧合。 `g/re/p`命令最初来自第一行文本编辑器之一的Ed Editor。 `grep`命令的名称来自Ed。
 
-It spells *"grep"*, the same `grep` from the command line. This is **not** a coincidence. The `g/re/p` command originally came from the Ed Editor, one of the first line text editors. The `grep` command got its name from Ed. 
+您的计算机可能仍具有Ed编辑器。从终端运行`ed`（提示：要退出，请键入`q`）。
 
-Your computer probably still has the Ed editor. Run `ed` from the terminal (hint: to quit, type `q`).
+＃更多示例
 
-# More examples
+##反转整个缓冲区
 
-## Reverse the Entire Buffer
-
-To reverse the entire file, run:
+要撤消整个文件，请运行：
 
 ```
 :g/^/m 0 
 ```
 
-`^` is a pattern for the "beginning of a line". Use `^` to match all lines, including empty lines.
+`^`是“行的开始”的模式。使用`^`匹配所有行，包括空行。
 
-If you need to reverse only a few lines, pass it a range. To reverse the lines between line five to line ten, run:
+如果只需要反转几行，请将其传递一个范围。要将第五行到第十行之间的行反转，请运行：
 
 ```
 :5,10g/^/m 0
 ```
 
-To learn more about the move command, check out `:h :move`.
+要了解有关move命令的更多信息，请查看`:h :move`。
 
-## Aggregating All TODOs
+##汇总所有待办事项
 
-When I code, sometimes I think of a random brilliant ideas. Not wanting to lose concentration, I usually write them down in the file I am editing, for example:
+当我编码时，有时我会想到一个随机的绝妙主意。不想失去专注，我通常将它们写在我正在编辑的文件中，例如：
 
 ```
 const one = 1;
@@ -321,51 +320,50 @@ console.log("one: ", one);
 // TODO: feed the puppy
 
 const two = 2;
-// TODO: feed the puppy automatically
+// TODO：自动喂小狗
 console.log("two: ", two);
-
 const three = 3;
 console.log("three: ", three);
-// TODO: create a startup selling an automatic puppy feeder
+// TODO：创建一家销售自动小狗喂食器的初创公司
 ```
 
-It can be hard to keep track of all the created TODOs. Vim has a `:t` (copy) method to copy all matches to an address. To learn more about the copy method, check out `:h :copy`.
+跟踪所有已创建的TODO可能很困难。 Vim有一个`:t`（copy）方法来将所有匹配项复制到一个地址。要了解有关复制方法的更多信息，请查看`:h :copy`。
 
-To copy all TODOs to the end of the file for easier introspection, run:
+要将所有TODO复制到文件末尾以便于自省，请运行：
 
 ```
 :g/TODO/t $
 ```
 
-Result:
+结果：
 
 ```
 const one = 1;
 console.log("one: ", one);
-// TODO: feed the puppy
+// TODO：喂小狗
 
 const two = 2;
-// TODO: feed the puppy automatically
+// TODO：自动喂小狗
 console.log("two: ", two);
 
 const three = 3;
 console.log("three: ", three);
-// TODO: create a startup selling an automatic puppy feeder
+// TODO：创建一家销售自动小狗喂食器的初创公司
 
-// TODO: feed the puppy
-// TODO: feed the puppy automatically
-// TODO: create a startup selling an automatic puppy feeder
+// TODO：喂小狗
+// TODO：自动喂小狗
+// TODO：创建一家销售自动小狗喂食器的初创公司
 ```
 
-Now I can review all the TODOs I created, find a time to do them or delegate them to someone else, and continue to work on my next task.
+现在，我可以查看我创建的所有TODO，找到时间来完成它们或将它们委托给其他人，然后继续执行下一个任务。
 
-Another alternative is to use `m`:
+另一种选择是使用`m`：
 
 ```
 :g/TODO/m $
 ```
 
-Result:
+结果：
 
 ```
 const one = 1;
@@ -377,26 +375,26 @@ console.log("two: ", two);
 const three = 3;
 console.log("three: ", three);
 
-// TODO: feed the puppy
-// TODO: feed the puppy automatically
-// TODO: create a startup selling an automatic puppy feeder
+// TODO：喂小狗
+// TODO：自动喂小狗
+// TODO：创建一家销售自动小狗喂食器的初创公司
 ```
 
-I can just delete the list once I decided what to do with it.
+一旦决定要删除列表，就可以删除它。
 
-## Black Hole Delete
+##黑洞删除
 
-Recall from the register chapter that deleted texts are stored inside the numbered registers (granted they are sufficiently large ). Whenever you run `:g/console/d`, Vim stores the deleted lines in the numbered registers. If you delete many lines, you can quickly fill up all the numbered registers. To avoid this, you can always use the black hole register (`"_`) to *not* store your deleted lines into the registers. Run:
+从寄存器一章回想一下，已删除的文本存储在已编号的寄存器中（允许它们足够大）。每当运行`：g / console / d`时，Vim都会将删除的行存储在编号寄存器中。如果删除许多行，则可以快速填充所有编号的寄存器。为了避免这种情况，您始终可以使用黑洞寄存器（`“ _`）*不*将删除的行存储到寄存器中。
 
 ```
 :g/console/d _
 ```
 
-By passing `_` after `d`, Vim won't save the deleted lines into any registers.
+通过在`d`之后传递`_`，Vim不会将删除的行保存到任何寄存器中。
 
-## Reduce Multiple Empty Lines to One Empty Line
+##将多条空行减少为一条空行
 
-If you have a file with multiple empty lines like the following:
+如果您的文件带有多个空行，如下所示：
 
 ```
 const one = 1;
@@ -413,14 +411,15 @@ console.log("two: ", two);
 const three = 3;
 console.log("three: ", three);
 ```
+```
 
-You can quickly reduce each the long empty lines to one empty line. Run:
+您可以快速将每条长长的空行减少为一条空行。跑：
 
 ```
 :g/^$/,/./-1j
 ```
 
-Result:
+结果：
 
 ```
 const one = 1;
@@ -433,27 +432,26 @@ const three = 3;
 console.log("three: ", three);
 ```
 
-Let's break it down:
-- `:g` is the global command
-- `/^$/` is the pattern for an empty line. Recall that `^` means the beginning of the line and `$` the end of the line. `^$` matches an empty line (a line with zero characters long).
-- `,/./-1` is the range for the `j` command. Since you don't pass a value for the starting range, it starts from the current line. You just learned earlier that `/./` is a pattern for a non-empty line. `,/./` is a range from the current line to the next non-empty line. The global command's range, `/^$/`, takes you to the first match on the line below `console.log("one: ", one);`. This is the current line. `/./` matches the first non-empty line, the line `const two = 2;`. Finally, `-1` offsets that by one line. The effective range for the first match is the empty line below the `console.log("one: ", one);` and the empty line above the `const two = 2;`.
-- `j` is the join command `:j`. You can join all the lines given as its range. For example, `:1,5j` joins lines one through five.
+让我们分解一下：
+- `:g` 是全局命令
+- `/^$/` 是空行的模式。回想一下，`^`表示行的开始，`$`表示行的结束。 `^ $`匹配一个空行（一个零字符长的行）。
+- `,/./-1`  是`j`命令的范围。由于您没有传递起始范围的值，因此它从当前行开始。您之前已经了解到`/./`是非空行的模式。 `，/。/`是从当前行到下一个非空行的范围。全局命令的范围`/ ^ $ /`会将您带到`console.log（“ one：”，one）;`下面的第一行。这是当前行。 “ /./”匹配第一条非空行，即“ const two = 2;”行。最后，“-1”将其偏移一行。第一次匹配的有效范围是console.log（“ one：”，one）;下方的空行和const two = 2;上方的空行。
+- `j` 是连接命令`：j`。您可以加入所有作为其范围的行。例如，`：1,5j`连接第一到第五行。
+请注意，您正在`j`命令之前传递范围（`，/。/-1`）。仅仅因为您在全局命令中使用了命令行命令，并不意味着您不能给它一个范围。在这段代码中，您将传递给`j`命令自己的范围来执行。您可以在执行全局命令时将范围传递给任何命令。
 
-Notice that you are passing a range (`,/./-1`) before the `j` command. Just because you are using a command-line command with the global command, does not mean you cannot give it a range. In this code, you are passing to the `j` command its own range to execute on. You can pass a range to any command while executing the global command.
-
-By the way, if you want to reduce multiple empty lines into no lines, instead of using `,/./-1` as the range for `j` command, just use `,/./` as the range instead:
+顺便说一句，如果您想将多条空行减少为无行，而不是将`，/。/-1`用作`j`命令的范围，只需使用`，/。/`作为范围：
 
 ```
 :g/^$/,/./j
 ```
 
-Or simpler:
+或更简单：
 
 ```
 :g/^$/-j
 ```
 
-Your text is now reduced to:
+您的文字现在减少为：
 
 ```
 const one = 1;
@@ -464,9 +462,9 @@ const three = 3;
 console.log("three: ", three);
 ```
 
-## Advanced sort
+##高级排序
 
-Vim has a `:sort` command to sort the lines within a range. For example:
+Vim有一个`：sort`命令来对一个范围内的行进行排序。例如：
 
 ```
 d
@@ -476,9 +474,9 @@ e
 c
 ```
 
-You can sort them by running `:sort`. If you give it a range, it will sort only the lines within that range. For example, `:3,5sort` sorts only between lines three and five. 
+您可以通过运行`：sort`对它们进行排序。如果给它一个范围，它将只对该范围内的行进行排序。例如，`：3,5sort`仅在第三和第五行之间排序。
 
-If you have the following expressions:
+如果您具有以下表达式：
 
 ```
 const arrayB = [
@@ -504,13 +502,13 @@ const arrayA = [
 ]
 ```
 
-If you need to sort the elements inside the arrays, but not the arrays themselves, you can run this:
+如果需要排序数组中的元素，而不是数组本身，可以运行以下命令：
 
 ```
 :g/\[/+1,/\]/-1sort
 ```
 
-Result:
+结果：
 ```
 const arrayB = [
   "a",
@@ -535,27 +533,27 @@ const arrayA = [
 ]
 ```
 
-This is great! But the command looks complicated. Let's break it down. The command consists of three main parts: the global command pattern, the sort command range, and the sort command.
+这很棒！但是命令看起来很复杂。让我们分解一下。该命令包含三个主要部分：全局命令模式，排序命令范围和排序命令。
 
-`:g/\[/` is the global command pattern. 
-- `:g` is the global command.
-- `/\[/` is the pattern used by the global command. `\[` looks for a literal "[" string.
+`:g/\[/` 是全局命令模式。
+- `:g` 是全局命令。
+- `/\[/` 是全局命令使用的模式。 `\[`查找文字"["字符串。
 
-`+1,/\]/-1` is the range for the sort command.
-- A range can have a starting and an ending addresses. In this case, `+1` is the starting address and `/\]/-1` is the ending address.
-- `+1` represents the line after the current line, which is the line that matches the pattern "[" from the global command. `+1` offsets the current line by one line. So in the first match, the range actually starts one line *after* the `const arrayB = [` text.
-- `/\]/-1` is the ending address. `\]` represents a literal closing square bracket "]". `-1` offsets it by one line. The ending address is the line above the "]".
+`+1,/\]/-1`  是排序命令的范围。
+-范围可以有开始和结束地址。在这种情况下，`+1`是起始地址，`/\]/-1`是结束地址。
+- `+1` 表示当前行之后的行，这是与全局命令中的模式“ [”匹配的行。 “ +1”将当前行偏移一行。因此，在第一个匹配项中，范围实际上是在`const arrayB = [`文本*之后*的一行。
+- `/\]/-1` 是结束地址。 `\]`代表一个文字的右方括号“]”。 `-1`将其偏移一行。结束地址是"]"上方的行。
 
-`sort` is the sort command-line command. It sorts everything within the given range. Everything after the "[" to the line above "]" is getting sorted.
+`sort`是sort命令行命令。它对给定范围内的所有内容进行排序。 "["到"]"上方的行之后的所有内容均已排序。
 
-If you are still confused by the command, do not worry. It took me a long time to grasp it. Take a break, leave the screen, and come back again with a fresh mind.
+如果您仍然对该命令感到困惑，请不要担心。我花了很长时间才掌握它。稍事休息，离开屏幕，然后重新思考。
 
-# Learn the Global Command the Smart Way
+＃聪明地学习全局命令
 
-The global command executes the command-line command against all matching lines. With it, you only need to run a command once and Vim will do the rest for you. To become proficient at the global command, two things are required: a good vocabulary of command-line commands and a knowledge of regular expressions. As you spend more time using Vim, you will naturally learn more command-line commands. A regular expression knowledge will require a more active approach. But once you become comfortable with regular expressions, you will be ahead of many. 
+全局命令针对所有匹配的行执行命令行命令。有了它，您只需要运行一次命令，Vim就会为您完成其余的工作。要精通全局命令，需要做两件事：良好的命令行命令词汇表和正则表达式知识。随着您花费更多的时间使用Vim，您自然会学到更多的命令行命令。正则表达式知识将需要更积极的方法。但是，一旦您对正则表达式感到满意，您将领先于很多。
 
-Some of the examples here are complicated. Do not be intimidated. Really take your time to understand them. Learn to read the patterns. Make sure you know what each letter in each command represent. Do not give up.
+这里的一些例子很复杂。不要被吓到。真是花时间了解它们。学习阅读模式。确保您知道每个命令中的每个字母代表什么。不要放弃。
 
-Whenever you need to apply a command in several locations, pause and see if you can use the `g` command. Look for the best command for the job and write a pattern to target as many things at once. Then repeat it until you can do it without thinking. The next time, see if there is even a faster and more efficient way to do it.
+每当需要在多个位置应用命令时，请暂停并查看是否可以使用`g`命令。寻找最适合工作的命令，并编写一个模式以同时定位多个目标。然后重复执行此操作，直到您无需考虑即可进行操作。下次，看看是否有更快，更有效的方法。
 
-Now that you know how powerful the global command is, let's learn how to use the external commands to increase your tool arsenals.
+既然您已经知道全局命令的功能强大，那么让我们学习如何使用外部命令来增加工具库。
