@@ -1,37 +1,36 @@
-# Learn Vim (the Smart Way)
+# Vim(スマートな方法)を学ぶ
 
-## Language
- [[English](./README.md)][[简体中文](README_zh-CN.md)] [[日本語](README_ja-JP.md)]
+## 言語
+ [[英語](./README.md)] [[简体中文](README_zh-CN.md)] [[日本語](README_ja-JP.md)]
 
-## What is this about?
-*Learn Vim (the Smart Way)* is a book to learn the good parts of Vim.
+## これは何についてですか？
+* Learn Vim(スマートウェイ)*は、Vimの優れた部分を学ぶための本です。
 
-## Table Of Contents (In Progress)
-- Ch 0     - Learn Vim the Smart Way
-- Ch 1     - Starting Out
-- [Ch 2     - Buffers, Windows, and Tabs](ja-JP/ch02_buffers_windows_tabs.md)
-- [Ch 3     - Opening and Searching Files](ja-JP/ch03_opening_and_searching_files.md)
-- [Ch 4     - Vim Grammar](ja-JP/ch04_vim_grammar.md)
-- [Ch 5     - Moving in a File](ja-JP/ch05_moving_in_file.md)
-- [Ch 6     - Insert Mode](ja-JP/ch06_insert_mode.md)
-- [Ch 7     - The Dot command](ja-JP/ch07_the_dot_command.md)
-- [Ch 8     - Registers](ja-JP/ch08_registers.md)
-- [Ch 9     - Macros](ja-JP/ch09_macros.md)
-- [Ch 10    - Undo](ja-JP/ch10_undo.md)
-- [Ch 11    - Visual Mode](ja-JP/ch11_visual_mode.md)
-- [Ch 12    - Search and Substitute](ja-JP/ch12_search_and_substitute.md)
-- [Ch 13    - The Global Command](ja-JP/ch13_the_global_command.md)
-- [Ch 14    - External Commands](ja-JP/ch14_external_commands.md)
-- Ch 15    - Command Line Mode
-- Ch 16    - Tags
-- Ch 17    - Git
-- Ch 18    - Fold
-- Ch 19    - Compile
+## 目次(進行中)
+- 第0章     - スマートな方法でVimを学ぶ
+- 第1章     - はじめに
+- [第2章     - ウィンドウ、タブ](ja-JP/ch02_buffers_windows_tabs.md)
+- [第3章     - ファイルを開いて検索する](ja-JP/ch03_opening_and_searching_files.md)
+- [第4章     - Vim文法](ja-JP/ch04_vim_grammar.md)
+- [第5章     - ファイルの移動](ja-JP/ch05_moving_in_file.md)
+- [第6章     - 挿入モード](ja-JP/ch06_insert_mode.md)
+- [第7章     - ドットコマンド](ja-JP/ch07_the_dot_command.md)
+- [第8章     - レジスタ](ja-JP/ch08_registers.md)
+- [第9章     - マクロ](ja-JP/ch09_macros.md)
+- [第10章     - 元に戻す](ja-JP/ch10_undo.md)
+- [第11章     - ビジュアルモード](ja-JP/ch11_visual_mode.md)
+- [第12章     - 検索と置換](ja-JP/ch12_search_and_substitute.md)
+- [第13章     - グローバルコマンド](ja-JP/ch13_the_global_command.md)
+- [第14章     - 外部コマンド](ja-JP/ch14_external_commands.md)
+- 第15章     - コマンドラインモード
+- 第16章     - タグ
+- 第17章     - Git
+- 第18章     - 折り
+- 第19章     - コンパイル
 
-# License & Copyright
-The materials here are all ©2020 Igor Irianto.
+# ライセンスと著作権
+ここの資料はすべて©2020 Igor Iriantoです。
 
-<a rel="license" href="http://creativecommons.org/licenses/by-nc-nd/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by-nc-nd/4.0/88x31.png" /></a><br />
+<a rel="license" href="http://creativecommons.org/licenses/by-nc-nd/4.0/"> <img alt = "クリエイティブコモンズライセンス" style = "border-width：0" src = "https://i.creativecommons.org/l/by-nc-nd/4.0/88x31.png" /> </a> <br />
 
-This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-nc-nd/4.0/">Creative Commons Attribution-NonCommercial-NoDerivs 4.0 Unported License</a>.
-
+この作品は、<a rel="license" href="http://creativecommons.org/licenses/by-nc-nd/4.0/"> Creative Commons Attribution-NonCommercial-NoDerivs 4.0 Unported License </a>に基づいてライセンスされています。
