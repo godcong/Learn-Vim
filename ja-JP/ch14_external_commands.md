@@ -1,41 +1,41 @@
-# External Commands
+# 外部コマンド
 
-Inside the Unix system, you will find many small, hyper-specialized commands where each does one thing well. You can chain these commands  to work together to solve a complex problem. Wouldn't it be great if you can use these commands from inside Vim?
+Unixシステム内には、それぞれが1つのことを上手くこなす、非常に特化した小さなコマンドがたくさんあります。これらのコマンドを連鎖させて連携させると、複雑な問題を解決できます。 Vimの内部からこれらのコマンドを使用できるとすばらしいと思いませんか？
 
-In this chapter, you will learn how extend Vim to work seamlessly with external commands.
+この章では、Vimを拡張して外部コマンドとシームレスに連携する方法を学びます。
 
-# The Bang Command
+# バングコマンド
 
-Vim has a bang (`!`) command that can do three things:
+Vimには、3つのことを実行できるbang( `!`)コマンドがあります。
 
-1. Read the STDOUT of an external command into the current buffer.
-2. Write the content of your buffer as the STDIN to an external command.
-3. Execute an external command from inside Vim.
+1.外部コマンドのSTDOUTを現在のバッファーに読み込みます。
+2.バッファの内容をSTDINとして外部コマンドに書き込みます。
+3. Vim内から外部コマンドを実行します。
 
 
-# Reading the STDOUT of a Command Into Vim
+# コマンドのSTDOUTをVimに読み込む
 
-The syntax to read the STDOUT of an external command into the current buffer is:
+外部コマンドのSTDOUTを現在のバッファーに読み込む構文は次のとおりです。
 
 ```
-:r !{cmd}
+:r!{cmd}
 ```
 
-`:r` is Vim's read command. If you use it without `!`, you can use it to get the content of a file. If you have a file `file1.txt` in the current directory and you run:
+`:r`はVimの読み込みコマンドです。 `!`なしで使用すると、ファイルのコンテンツを取得できます。現在のディレクトリにファイル「file1.txt」があり、次を実行した場合:
 
 ```
 :r file1.txt
 ```
 
-Vim will put the content of `file1.txt` into the current buffer.
+Vimは `file1.txt`の内容を現在のバッファーに入れます。
 
-If you run the `:r` command followed by a `!` and an external command, the output of that commmand will be inserted into the current buffer. To get the result of the `ls` command, run:
+`:r`コマンドに続いて`! `と外部コマンドを実行すると、そのコマンドの出力が現在のバッファーに挿入されます。 `ls`コマンドの結果を取得するには、以下を実行します:
 
 ```
-:r !ls
+:r!ls
 ```
 
-It returns something like:
+それは次のようなものを返します:
 
 ```
 file1.txt
@@ -43,152 +43,153 @@ file2.txt
 file3.txt
 ```
 
-You can read the data from the `curl` command:
+`curl`コマンドからデータを読み取ることができます:
 
 ```
-:r !curl -s 'https://jsonplaceholder.typicode.com/todos/1'
+:r!curl -s 'https://jsonplaceholder.typicode.com/todos/1'
 ```
 
-The `r` command also accepts an address:
+`r`コマンドはアドレスも受け付けます:
 
 ```
-:10r !cat file1.txt
+:10r!cat file1.txt
 ```
 
-Now the STDOUT from running `cat file.txt` will be inserted after line 10.
+これで、 `cat file.txt`の実行によるSTDOUTが10行目に挿入されます。
 
-# Writing the Buffer Content Into an External Command
+# バッファの内容を外部コマンドに書き込む
 
-In addition to saving a file, you can also use the write command (`:w`) to pass the text in the current buffer as the STDIN for an external command. The syntax is:
+ファイルの保存に加えて、書き込みコマンド( `:w`)を使用して、現在のバッファー内のテキストを外部コマンドのSTDINとして渡すこともできます。構文は次のとおりです。
 
 ```
 :w !cmd
 ```
 
-If you have these expressions:
+これらの式がある場合:
 
 ```
 console.log("Hello Vim");
 console.log("Vim is awesome");
 ```
 
-Make sure you have [node](https://nodejs.org/en/) installed in your machine, then run:
+マシンに[node](https://nodejs.org/en/)がインストールされていることを確認してから、次を実行します。
 
 ```
-:w !node
+:w!ノード
 ```
 
-Vim will use `node` to execute the Javascript expressions to print "Hello Vim" and "Vim is awesome". 
+Vimは「node」を使用してJavaScript式を実行し、「Hello Vim」と「Vim is awesome」を出力します。
 
-When using the `:w` command, Vim uses all texts in the current buffer, similar to the global command (most command-line commands, if you don't pass it a range, only executes the command against the current line). If you pass `:w` a specific address:
+`:w`コマンドを使用すると、Vimはグローバルコマンドと同様に、現在のバッファー内のすべてのテキストを使用します(ほとんどのコマンドラインコマンドは、範囲を渡さない場合、現在の行に対してのみコマンドを実行します)。 `:w`に特定のアドレスを渡すと:
 
 ```
 :2w !node
 ```
 
-Vim only uses the text from the second line into the `node` interpreter.
+Vimは2行目のテキストを `node`インタープリターにのみ使用します。
 
-There is a subtle but significant difference between `:w !node` and `:w! node`. With `:w !node`, you are "writing" the text in the current buffer into the external command `node`. With `:w! node`, you are force-saving a file and naming the file "node".
+`:w!node`と`:w!ノード `。 `:w!node`を使用すると、現在のバッファーのテキストを外部コマンド` node`に「書き込み」ます。 `:w!ノード `、あなたはファイルを強制的に保存し、ファイルに「ノード」という名前を付けています。
 
-# Executing an External Command
+# 外部コマンドの実行
 
-You can execute an external command from inside Vim with the bang command. The syntax is:
+bangコマンドを使用すると、Vim内から外部コマンドを実行できます。構文は次のとおりです。
 
 ```
 :!cmd
 ```
 
-To see the content of the current directory in the long format, run:
+現在のディレクトリの内容を長い形式で表示するには、次のコマンドを実行します。
 
 ```
 :!ls -ls
 ```
 
-To kill a process that is running on PID 3456, you can run:
+PID 3456で実行されているプロセスを強制終了するには、次のコマンドを実行します。
 
 ```
 :!kill -9 3456
 ```
 
-You can run any external command without leaving Vim so you can stay focused on your task.
+Vimを離れることなく外部コマンドを実行できるため、タスクに集中できます。
 
-# Filtering Texts
+# テキストのフィルタリング
 
-If you give `!` a range, it can be used to filter texts. Suppose you have this:
+`!`に範囲を指定すると、テキストのフィルタリングに使用できます。あなたがこれを持っていると仮定します:
 
 ```
 hello vim
 hello vim
 ```
 
-Let's uppercase the current line using the `tr` (translate) command. Run:
+`tr`(translate)コマンドを使って現在の行を大文字にしましょう。実行:
 
 ```
-:.!tr '[:lower:]' '[:upper:]'
+:。!tr '[:lower:]' '[:upper:]'
 ```
 
-The result:
+結果:
 
 ```
 HELLO VIM
 hello vim
 ```
 
-The breakdown:
-- `.!` executes the filter command on the current line.
-- `!tr '[:lower:]' '[:upper:]'` calls the `tr` command to replace all lowercase characters with uppercase ones.
+内訳:
+-`。!`は現在の行でフィルターコマンドを実行します。
+-`!tr '[:lower:]' '[:upper:]'`は、 `tr`コマンドを呼び出して、すべての小文字を大文字に置き換えます。
 
-It is imperative to pass a range to run the external command as a filter. If you try running the command above without the `.` (`:!tr '[:lower:]' '[:upper:]'`), you will see an error.
+外部コマンドをフィルターとして実行するには、範囲を渡すことが不可欠です。上記のコマンドを `.`(`:!tr '[:lower:]' '[:upper:]' `)なしで実行しようとすると、エラーが表示されます。
 
-Let's assume that you need to remove the second column on both lines with the `awk` command:
+`awk`コマンドで両方の行の2列目を削除する必要があると仮定しましょう:
 
 ```
 :%!awk "{print $1}"
 ```
 
-The result:
+結果:
 
 ```
 hello
 hello
-```
-
-The breakdown:
-- `:%!` executes the filter command on all lines (`%`).
-- `awk "{print $1}"` prints only the first column of the match. In this case, the word "hello". 
-
-You can chain multiple commands with the chain operator (`|`) just like in the terminal. Let's say you have a file with these delicious breakfast items:
 
 ```
-name price
-chocolate pancake 10
+
+内訳:
+-`:％!`はすべての行でフィルターコマンドを実行します( `％`)。
+-`awk" {print $ 1} "`は、一致の最初の列のみを印刷します。この場合、「こんにちは」という言葉。
+
+ターミナルと同じように、チェーン演算子( `|`)を使用して複数のコマンドをチェーンできます。次のおいしい朝食アイテムのファイルがあるとします。
+
+```
+名目価格
+チョコレートパンケーキ10
+バターミルクパンケーキ9
+ブルーベリーパンケーキ12
+```
+
+価格に基づいてそれらを並べ替え、等間隔のメニューのみを表示する必要がある場合は、次のコマンドを実行できます。
+
+```
+:％!awk 'NR> 1' | sort -nk 3 |列-t
+```
+
+結果:
+```
 buttermilk pancake 9
-blueberry pancake 12
-```
-
-If you need to sort them based on the price and display only the menu with an even spacing, you can run:
-
-```
-:%!awk 'NR > 1' | sort -nk 3 | column -t
-```
-
-The result:
-```
-buttermilk pancake 9
 chocolate pancake 10
 blueberry pancake 12
+
 ```
+内訳：
+-`：％!`はすべての行にフィルターを適用します( `％`)。
+-`awk 'NR> 1'`は、行番号2以降のテキストのみを表示します。
+-`|`は次のコマンドをチェーンします。
+-`sort -nk 3`は、列3(` k 3`)の値を使用して数値( `n`)で並べ替えます。
+-`column -t`は、テキストを等間隔に編成します。
 
-The breakdown:
-- `:%!` applies the filter to all lines (`%`).
-- `awk 'NR > 1'` displays the texts only from row number two onwards.
-- `|` chains the next command.
-- `sort -nk 3` sorts numerically (`n`) using the values from column 3 (`k 3`).
-- `column -t` organizes the text with even spacing.
+# 通常モードコマンド
 
-# Normal mode command
-
-Vim has a filter operator (`!`) in the normal mode. If you have the following greetings:
+Vimには通常モードでフィルター演算子( `!`)があります。次の挨拶がある場合：
 
 ```
 hello vim
@@ -197,19 +198,19 @@ bonjour vim
 salve vim
 ```
 
-To uppercase the current line and the line below, you can run:
+現在の行とその下の行を大文字にするには、次のコマンドを実行します。
 ```
 !jtr '[a-z]' '[A-Z]'
 ```
 
-The breakdown:
-- `!j` runs the normal command filter operator (`!`) targetting the current line and the line below it. Recall that because it is a normal mode operator, the grammar rule `verb + noun` applies. 
-- `tr '[a-z]' '[A-Z]'` replaces the lowercase letters with the uppercase letters.
+内訳：
+-`!j`は、現在の行とその下の行をターゲットとする通常のコマンドフィルター演算子(`! `)を実行します。通常のモード演算子であるため、文法規則「動詞+名詞」が適用されることを思い出してください。
+-`tr '[a-z]' '[A-Z]'`は、小文字を大文字に置き換えます。
 
-The filter normal command only works on motions / text objects that are at least one line or longer. If you had tried running `!iwtr '[a-z]' '[A-Z]'` (execute `tr` on inner word), you will find that it applies the `tr` command on the entire line, not the word your cursor is on.
+filter normalコマンドは、少なくとも1行以上のモーション/テキストオブジェクトでのみ機能します。 `!iwtr '[az]' '[AZ]'`を実行しようとした場合(内側の単語で `tr`を実行)、カーソルの単語ではなく、行全体に` tr`コマンドが適用されることがわかりますオンです。
 
-# Learn External Commands the Smart Way
+# スマートな方法で外部コマンドを学ぶ
 
-Vim is not an IDE. It is a lightweight modal editor that is highly extensible by design. Because of this extensibility, you have easy access to any external command in your system. With this, Vim is one step closer from becoming an IDE. Someone said that the Unix system is the first IDE ever.
+VimはIDEではありません。これは、設計によって高度に拡張可能な軽量のモーダルエディターです。この拡張性により、システムの外部コマンドに簡単にアクセスできます。これにより、VimはIDEになることから一歩近づきました。 Unixシステムは史上初のIDEだと誰かが言った。
 
-The bang command is as useful as how many external commands you know. Don't worry if your external command knowledge is limited. I still have a lot to learn too. Take this as a motivation for continuous learning. Whenever you need to filter a text, look if there is an external command that can solve your problem. Don't worry about mastering everything about a particular command. Just learn the ones you need to complete the current task.
+bangコマンドは、知っている外部コマンドの数と同じくらい便利です。外部コマンドの知識が限られている場合でも心配しないでください。私にはまだ学ぶことがたくさんあります。これを継続的な学習の動機と考えてください。テキストをフィルタリングする必要があるときはいつでも、問題を解決できる外部コマンドがあるかどうかを確認してください。特定のコマンドに関するすべてを習得する必要はありません。現在のタスクを完了するために必要なものを学ぶだけです。
