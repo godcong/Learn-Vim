@@ -1,7 +1,7 @@
 # 学习Vim（智能方式）
 
 ## 语言
- [[English](./README.md)]
+  [[English](./README.md)][[简体中文](README_zh-CN.md)] [[日本語](README_ja-JP.md)]
 
 ## 这是什么?
 *学习Vim（智能方式）* 是一本优秀的学习Vim知识的书。
