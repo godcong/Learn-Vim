@@ -1,71 +1,69 @@
-# Search and Substitute
-This chapter covers two separate but related concepts: search and substitute. Many times, the texts that you are searching for are not straightforward and you must search for a common pattern. By learning how to use meaningful patterns in search and substitute instead of literal strings, you will be able to target any text quickly.
+# 搜索和替换
+本章涵盖两个独立但相关的概念:搜索和替代。很多时候，您要搜索的文本并不简单，您必须搜索通用模式。通过学习如何在搜索和替换中使用有意义的模式而不是文字字符串，您将能够快速定位任何文本。
 
-As a side note, in this chapter, I will mainly use `/` when talking about search. Everything you can do with `/` can also be done with `?`.
+附带说明一下，在本章中，当谈论搜索时，我将主要使用`/`。您可以使用`/`进行的所有操作也可以使用`?`完成。
 
-# Smart Case Sensitivity
+# 智能案例敏感性
 
-It can be tricky trying to match the case of the search term. If you are searching for the text "Learn Vim", you can easily mistype the case of one letter and get a false search result. Wouldn't it be easier and safer if you can match any case? This is where the option `ignorecase` shines. Just add `set ignorecase` in your vimrc and all your search terms become case insensitive. Now you don't have to do `/Learn Vim` anymore. `/learn vim` will work.
+尝试匹配搜索词的大小写可能会很棘手。如果要搜索文本"Learn Vim"，则很容易错误键入一个字母的大小写，并得到错误的搜索结果。如果可以匹配任何情况，会不会更轻松，更安全？这是选项`ignorecase`闪亮的地方。只需在vimrc中添加`setignorecase`，所有搜索词就不区分大小写。现在，您不必再执行`/Learn Vim`了。 `/learn vim`将起作用。
 
-However, there are times when you need to search for a case specific phrase. One way to do that is to turn off `ignorecase` option with `set noignorecase`, but that is a lot of work to turn on and off each time you need to search for a case sensitive phrase.
+但是，有时您需要搜索特定于案例的短语。一种方法是用 `set ignorecase` 关闭`ignorecase`选项，但是每次需要搜索区分大小写的短语时，都要打开和关闭很多工作。
 
-Is there a setting that allows you to do case insensitive search most of the time, but also know to do case sensitive search when you need it? Turns out there is a way.
+是否有一种设置可以让您在大多数时间进行不区分大小写的搜索，但又知道在需要时进行区分大小写的搜索？原来有办法。
 
-Vim has a `smartcase` option to override `ignorecase` if the search pattern *contains at least one uppercase character*. You can combine both `ignorecase` and `smartcase` to perform a case insensitive search when you enter all lowercase characters and a case sensitive search when you enter one or more uppercase characters. 
+如果搜索模式*至少包含一个大写字符*，Vim有一个'smartcase'选项来覆盖`ignorecase`。当您输入所有小写字符时，您可以将"ignorecase"和"smartcase"结合使用以执行不区分大小写的搜索，而输入一个或多个大写字符时则执行区分大小写的搜索。
 
-Inside your vimrc, add:
+在您的vimrc中，添加:
 
 ```
 set ignorecase smartcase
 ```
 
-If you have these texts:
+如果您有这些文字:
 ```
 hello
 HELLO
 Hello
 ```
 
-You can control case insensitivity with the case of your search phrase:
-- `/hello` matches "hello", "HELLO", and "Hello".
-- `/HELLO` matches only "HELLO".
-- `/Hello` matches only "Hello"
+您可以使用搜索词的大小写来控制不区分大小写:
+- `/hello` 匹配"hello"，"HELLO"和"Hello"。
+- `/HELLO` 仅匹配"HELLO"。
+- `/Hello` 仅匹配"Hello"。
 
-There is one downside. What if you need to search for only a lowercase string? When you do `/hello`, Vim will always match its uppercase variants. What if you don't want to match them? You can use `\c` pattern in front of your search term to tell Vim that the subsequent search term will be case sensitive. If you do `/\chello`, it will strictly match "hello", not "HELLO" or "Hello".
+有一个缺点。 如果只需要搜索小写字符串怎么办？ 当您执行/ hello时，Vim将始终匹配其大写变体。 如果您不想匹配它们怎么办？ 您可以在搜索词前使用`\c`模式来告诉Vim，后续搜索词将区分大小写。 如果执行`/\chello`，它将严格匹配"hello"，而不是"HELLO"或"Hello"。
+# 一行中的第一个和最后一个字符
 
-# First and Last Character in a Line
+您可以使用`^`匹配行中的第一个字符，并使用`$`匹配行中的最后一个字符。
 
-You can use `^` to match the first character in a line and `$` to match the last character in a line.
-
-If you have this text:
+如果您有以下文字:
 
 ```
 hello hello
 ```
 
-You can target the first "hello" with `/^hello`. The character that follows `^` must be the first character in a line. To target the last "hello", run `/hello$`. The character before `$` must be the last character in a line. 
+您可以使用`/^hello`来定位第一个"hello"。 ^后面的字符必须是一行中的第一个字符。 要定位最后一个"hello"，请运行`/hello$`。 $之前的字符必须是一行中的最后一个字符。
 
-If you have this text:
+如果您有以下文字:
 
 ```
 hello hello friend
 ```
 
-Running `/hello$` will match anything because "friend" is the last term in that line, not "hello".
+运行`/hello$`将匹配任何内容，因为"friend"是该行的最后一项，而不是"hello"。
 
-# Repeating Search
+# 重复搜索
+您可以使用"//"重复上一个搜索。如果您只是搜索`/hello`，则运行`//`等同于运行`/hello`。此快捷键可以为您节省一些按键操作，尤其是在您搜索了很长时间的情况下。还记得您还可以使用"n"和"N"分别以相同方向和相反方向重复上一次搜索。
 
-You can repeat the previous search with `//`. If you have just searched for `/hello`, running `//` is equivalent to running `/hello`. This shortcut can save you some keystrokes especially if you just did a long search term. Also recall that you can also use `n` and `N` to repeat the last search with the same direction and opposite direction, respectively.
+如果您想快速回忆起*n*个最后一个搜索字词怎么办？您可以先遍历"/"，然后按“向上" /“向下"箭头键（或"Ctrl-N" /"Ctrl-P"），快速遍历搜索历史，直到找到所需的搜索词。要查看所有搜索历史，可以运行`:history/`。
 
-What if you want to quickly recall *n* last search term? You can quickly traverse the search history by first pressing `/`, then press `up`/`down` arrow keys (or `Ctrl-N`/`Ctrl-P`) until you find the search term you need. To see all your search history, you can run `:history /`.
+在搜索过程中到达文件末尾时，Vim会引发错误:`"搜索未找到匹配项的底部:<your-search>"。有时，这可以防止过度搜索，但是有时您又想将搜索重新循环到顶部。您可以使用`set wrapscan`选项使Vim在到达文件末尾时在文件顶部进行搜索。要关闭此功能，请执行"set nowrapscan"。
 
-When you reach the end of a file while searching, Vim throws an error: `"Search hit the BOTTOM without match for: <your-search>"`. Sometimes this can be a good safeguard from oversearching, but other times you want to cycle the search back to the top again. You can use the `set wrapscan` option to make Vim to search back at the top of the file when you reach the end of the file. To turn this feature off, do `set nowrapscan`.
+# 搜索替代词
 
-# Searching for Alternative Words
+通常一次搜索多个单词。 如果您需要搜索"hello vim"或"hola vim"，而不是"salve vim"或"bonjour vim"，则可以使用||管道替代语法。
 
-It is common to search for multiple words at once. If you need to search for *either* "hello vim" or "hola vim", but not "salve vim" or "bonjour vim", you can use the `|` pipe alternative syntax.
-
-Given this text:
+鉴于此文本:
 
 ```
 hello vim
@@ -74,25 +72,55 @@ salve vim
 bonjour vim
 ```
 
-To match both "hello" and  "hola", you can do `/hello\|hola`. You have to escape (`\`) the pipe (`|`) operator, otherwise Vim will literally search for the string "|". 
+要同时匹配"hello"和"hola"，可以执行`/hello\|hola`。 您必须转义（`\`）管道（`|`）运算符，否则Vim将按字面意义搜索字符串"|"。
 
-If you don't want to type `\|` every time, you can use the `magic` syntax (`\v`) at the start of the search: `/\vhello|hola`. I will not cover `magic` in this chapter, but with `\v`, you don't have to escape special characters anymore. To learn more about `\v`, feel free to check out `:h \v`.
+如果您不想每次都输入`\|`，则可以在搜索开始时使用`magic`语法（`\v`）:`/\vhello|hola`。 我不会在本章中介绍“魔术"，但是有了"\v"，您就不必再转义特殊字符了。 要了解有关\v的更多信息，请随时查看`:h \v`。
 
-# Searching Character Ranges
+# 设置比赛的开始和结束
 
-All your search terms up to this point have been a literal word search. In real life, you may have to use a general pattern to find your text. The most basic pattern is the character range, `[ ]`.
+也许您需要搜索作为复合词一部分的文本。 如果您有这些文字:
 
-If you need to search for any digit, you probably don't want to type `/0\|1\|2\|3\|4\|5\|6\|7\|8\|9\|0` every single time. Instead, use `/[0-9]` to match for a single digit. The `0-9` expression represents a range of numbers 0-9 that Vim will try to match, so if you are looking for digits between 1 to 5 instead, use `/[1-5]`. 
+```
+11vim22
+vim22
+11vim
+vim
+```
 
-Digits are not the only data types Vim can look up. You can also do `/[a-z]` to search for lowercase alphas and `/[A-Z]` to search for uppercase alphas. 
+如果您需要选择"vim"，但仅当它以"11"开头并以"22"结束时，可以使用`\zs`（开始匹配）和`\ze`（结束匹配）运算符。 执行:
 
-You can combine these ranges together. If you need to search for digits 0-9 and both lowercase and uppercase alphas from a to f (a hex), you can do `/[0-9a-fA-F]`. 
+```
+/11\zsvim\ze22
+```
 
-To do a negative search, you can add `^` inside the character range brackets. To search for a non-digit, run `/[^0-9]`. Vim will match any character as long as it is not a digit. Beware that the caret (`^`) inside the range brackets is different from the beginning-of-a-line caret (ex: `/^hello`). If a caret is outside of a pair of brackets and is the first character in the search term, it means "the first character in a line". If a caret is inside a pair of brackets and it is the first character inside the brackets, it means a negative search operator. `/^abc` matches the first "abc" in a line and `/[^abc]` matches any character except for an "a", "b", or "c".
+Vim仍然必须匹配整个模式"11vim22"，但是仅突出显示介于`\zs`和`\ze`之间的模式。 另一个例子:
 
-# Searching for Repeating Characters
+```
+foobar
+foobaz
+```
 
-If you need to search for double digits in this text:
+如果需要在"foobaz"中搜索"foo"，而不是在"foobar"中搜索，请运行:
+
+```
+/foo\zebaz
+```
+
+# 搜索字符范围
+
+到目前为止，您所有的搜索字词都是文字搜索。在现实生活中，您可能必须使用通用模式来查找文本。最基本的模式是字符范围"[]"。
+
+如果您需要搜索任何数字，则可能不想输入`/0\|1\|2\|3\|4\|5\|6\|7\|8\|9\|0`每一次。相反，请使用`/[0-9]`来匹配一位数字。 "0-9"表达式表示Vim尝试匹配的数字范围0-9，因此，如果要查找1到5之间的数字，请使用"/[1-5]"。
+
+数字不是Vim可以查找的唯一数据类型。您也可以执行`/[a-z]`来搜索小写字母，而`/[A-Z]`来搜索大写字母。
+
+您可以将这些范围组合在一起。如果您需要搜索数字0-9以及从a到f（十六进制）的小写字母和大写字母，可以执行`/[0-9a-fA-F]`。
+
+要进行否定搜索，可以在字符范围括号内添加"^"。要搜索非数字，请运行`/[^ 0-9]`。 Vim可以匹配任何字符，只要它不是数字即可。请注意，范围括号内的插入符号（`^`）与行首插入符号（例如:`/^hello）不同。如果插入号在一对方括号之外，并且是搜索词中的第一个字符，则表示“一行中的第一个字符"。如果插入符号在一对方括号内，并且是方括号内的第一个字符，则表示否定搜索运算符。 `/^abc`匹配行中的第一个"abc"，而`/[^abc]`匹配除"a"，"b"或"c"以外的任何字符。
+
+# 搜索重复字符
+
+如果需要在此文本中搜索两位数:
 
 ```
 1aa
@@ -100,113 +128,113 @@ If you need to search for double digits in this text:
 111
 ```
 
-You can use `/[0-9][0-9]` to match a two-digit character, but this method is unscalable. What if you need to match twenty digits? Typing `[0-9]` twenty times is not a fun experience. That's why you need a `count` argument.
+您可以使用`/[0-9][0-9]`来匹配两位数字字符，但是该方法不可缩放。 如果您需要匹配二十个数字怎么办？ 打字20次[[0-9]]并不是一种有趣的体验。 这就是为什么您需要一个`count`参数。
 
-You can pass `count` to your search. It has the following syntax:
+您可以将`count`传递给您的搜索。 它具有以下语法:
 
 ```
 {n,m}
 ```
 
-By the way, these `count` braces need to be escaped when you use them in Vim. The `count` operator is placed after a single character you want to increment.
+顺便说一句，当在Vim中使用它们时，这些“计数"花括号需要被转义。 count运算符放在您要递增的单个字符之后。
 
-Here are the four different variations of the `count` syntax:
-- `{n}` is an exact match. `/[0-9]\{2\}`  matches the two digit numbers: "11" and the "11" in "111".
-- `{n,m}` is a range match. `/[0-9]\{2,3\}` matches between 2 and 3 digit numbers: "11"  and "111".
-- `{,m}` is an up-to match. `/[0-9]\{,3\}` matches up to 3 digit numbers: "1", "11", and "111".
-- `{n,}` is an at-least match. `/[0-9]\{2,\}` matches at least a 2 or more digit numbers: "11" and "111".
+这是`count`语法的四种不同变体:
+-`{n}`是完全匹配。 `/[0-9]\{2\}`匹配两个数字:"11"和"111"中的"11"。
+-`{n,m}`是范围匹配。 `/[0-9]\{2,3\}`匹配2到3位数字:"11"和"111"。
+-`{,m}`是符合条件的。 `/[0-9]\{,3\}`最多匹配3个数字:"1"，"11"和"111"。
+-`{n,}`是至少匹配项。 `/[0-9]\{2,\}`至少匹配2个或多个数字:"11"和"111"。
 
-The count arguments `\{0,\}` (zero or more) and `\{1,\}` (one or more) are common search patterns and Vim has special operators for them: `*` and `+` (`+` needs to be escaped while `*` works fine without the escape). If you do `/[0-9]*`, it is the same as `/[0-9]\{0,\}`. It searches for zero or more digits. It will match "", "1", "123". By the way, it will also match non-digits like "a", because there is technically zero digit in the letter "a". Think carefully before using `*`. If you do `/[0-9]\+`, it is the same as `/[0-9]\{1,\}`. It searches for one or more digits. It will match "1" and "12".
+计数参数`\{0,\}`（零或多个）和`\{1,\}`（一个或多个）是常见的搜索模式，Vim为它们提供了特殊的运算符:`*`和`+`（ +需要被转义，而*可以正常运行而无需转义）。 如果执行`/[0-9]*`，则与`/[0-9]\{0,\}`相同。 它搜索零个或多个数字。 它将匹配“"，"1"，"123"。 顺便说一句，它也将匹配非数字，例如"a"，因为在技术上，字母"a"中的数字为零。 在使用"*"之前，请仔细考虑。 如果执行`/[0-9]\+`，则与`/[0-9]\{1,\}`相同。 它搜索一个或多个数字。 它将匹配"1"和"12"。
 
-# Predefined Ranges
+# 预定义范围
 
-Vim has predefined ranges for common characters like digits and alphas. I will not go through every single one here, but you can find the full list inside `:h /character-classes`. Here are the useful ones:
+Vim为常见字符（例如数字和字母）提供了预定义范围。 我不会在这里逐一介绍，但可以在`:h / character-classes`中找到完整列表。 这是有用的:
 
 ```
-\d    Digit [0-9]
-\D    Non-digit [^0-9]
-\s    Whitespace character (space and tab)
-\S    Non-whitespace character (everything except space and tab)
-\w    Word character [0-9A-Za-z_]
-\l    Lowercase alphas [a-z]
-\u    Uppercase character [A-Z]
+\d    数字[0-9]
+\D    非数字[^ 0-9]
+\s    空格字符（空格和制表符）
+\S    非空白字符（除空格和制表符外的所有字符）
+\w    文字字符[0-9A-Za-z_]
+\l    小写字母[a-z]
+\u    大写字符[A-Z]
 ```
 
-You can use them like you would use character ranges. To search for any single digit, instead of using `/[0-9]`, you can use `/\d` for a more concise syntax.
+您可以像使用字符范围一样使用它们。 要搜索任何一位数字，可以使用`/ \ d`以获得更简洁的语法，而不使用`/ [0-9]`。
 
-# More Search Examples
-## Capturing a Text Between a Pair of Similar Characters
+# 更多搜索示例
+## 在一对相似字符之间捕获文本
 
-If you want to search for a phrase surrounded by a pair of double quotes:
+如果要搜索由双引号引起来的短语:
 
 ```
 "Vim is awesome!"
 ```
 
-Run this:
+运行这个:
 
 
 `/"[^"]\+"`
 
 
-Let's break it down:
-- `"` is a literal double quote. It matches the first double quote.
-- `[^"]` means any character except for a double quote. It matches any alphanumeric and whitespace character as long as it is not a double quote. 
-- `\+` means one or more. Since it is preceded by `[^"]`, Vim looks for one or more character that is not a double quote.
-- `"` is a literal double quote. IT matches the closing double quote.
+让我们分解一下:
+- `"` 是字面双引号。它匹配第一个双引号。
+- `[^"]` 表示除双引号外的任何字符，只要不是双引号，它就与任何字母数字和空格字符匹配。
+- `\+`表示一个或多个。由于Vim的前面是`[^"]`，因此Vim查找一个或多个不是双引号的字符。
+- `"` 是字面双引号。它与右双引号匹配。
 
-When sees the first `"`, it begins the pattern capture. The moment Vim sees the second double quote in a line, it matches the second `"` pattern and stops the pattern capture. Meanwhile, all non-`"` characters between the two `"` are captured by the `[^"]\+` pattern, in this case, the phrase `Vim is awesome!`. This is a common pattern to capture a phrase surrounded by a pair of similar delimiters: to capture a phrase surrounded by a single quote, you can use `/'[^']\+'`. 
+当看到第一个`“`时，它开始模式捕获。Vim在一行中看到第二个双引号时，它匹配第二个`"`模式并停止模式捕获。同时，两个“"之间的所有非“"字符都被"[^"] \ +`模式捕获，在这种情况下，短语"Vim太棒了！"。由一对类似的定界符包围的词组:要捕获由单引号引起来的词组，可以使用`/'[^'] \ +'`。
 
-## Capturing a Phone Number
+## 捕获电话号码
 
-If you want to match a US phone number separated by a hyphen (`-`), like `123-456-7890`, you can use:
+如果要匹配以连字符（`-）分隔的美国电话号码，例如`123-456-7890`，则可以使用:
 ```
 /\v\d\{3\}-\d\{3\}-\d\{4\}
 ```
 
-US Phone number consists of a set of three digit number, followed by another three digits, and finally by four digits. Let's break it down:
-- `\d\{3\}` matches a digit repeated exactly three times
-- `-` is a literal hyphen
+美国电话号码由一组三位数字组成，其后是另外三位数字，最后是四位数字。 让我们分解一下:
+- `\d\{3\}`与精确重复三次的数字匹配
+- `-`是字面的连字符
 
-This pattern is also useful to capture any repeating digits, such as IP addresses and zip codes. 
+此模式还可用于捕获任何重复的数字，例如IP地址和邮政编码。
 
-That covers the search part of this chapter. Now let's move to substitution.
+这涵盖了本章的搜索部分。 现在开始替代。
 
-# Basic Substitution
+# 基本替代
 
-Vim's substitute command is a useful command to quickly find and replace any pattern. The substitution syntax is:
+Vim的替代命令是一个有用的命令，用于快速查找和替换任何模式。 替换语法为:
 
 ```
 :s/old-pattern/new-pattern/
 ```
 
-Let's start with a basic usage. If you have this text:
+让我们从一个基本用法开始。 如果您有以下文字:
 
 ```
 vim is good
 ```
 
-Let's substitute "good" with "awesome" because Vim is awesome. Run `:s/good/awesome/.` You should see:
+让我们用"awesome"代替"good"，因为Vim很棒。 运行`:s/good/awesome/.`您应该看到:
 
 ```
 vim is awesome
 ```
 
-# Repeating the Last Substitution
+# 重复最后一次替换
 
-You can repeat the last substitute command with either the normal command `&` or by running `:s`. If you have just run `:s/good/awesome/`, running either `&` or `:s` will repeat it. 
+您可以使用普通命令`&`或运行`:s`来重复最后一个替代命令。 如果您刚刚运行`:s/good/awesome/`，则运行`&`或`:s`都会重复执行。
 
-Also, earlier in this chapter I mentioned that you can use `//` to repeat the previous search pattern.  This trick works with the substitution command. If `/good` was done recently and you leave the first substitute pattern argument blank, like in `:s//awesome/`, it is the same as running `:s/good/awesome/`.
+另外，在本章前面，我提到您可以使用"//"来重复先前的搜索模式。 此技巧可用于替代命令。 如果`/ good`是最近完成的，并且将第一个替换模式参数留为空白，例如在`:s // awesome /`中，则与运行`:s / good / awesome /`相同。
 
-# Substitution Range
+# 替代范围
 
-Just like many Ex commands, you can pass a range argument into the substitute command. The syntax is:
+就像许多Ex命令一样，您可以将range参数传递给替代命令。 语法为:
 
 ```
 :[range]s/old/new/
 ```
 
-If you have these expressions:
+如果您具有以下表达式:
 
 ```
 let one = 1;
@@ -216,25 +244,25 @@ let four = 4;
 let five = 5;
 ```
 
-To substitute the "let" into "const" on lines three to five, you can do:
+要将第三行到第五行中的"let"替换为"const"，您可以执行以下操作:
 
 ```
 :3,5s/let/const/
 ```
 
-The substitute command's range syntax is similar to the count syntax in search (`{n,m}`), with minor differences. Here are some variations to pass the range:
+替代命令的范围语法与搜索（`{n,m}`）中的计数语法相似，但有细微差别。 这是通过范围的一些变化:
 
-- `:,3/let/const/` - if nothing is given before the comma, it represents the current line. Substitute from current line to line 3.
-- `:1,s/let/const/` - if nothing is given after the comma, it also represents the current line. Substitute from line 1 to current line.
-- `:3s/let/const/` - if only one value is given as range (no comma), it does substitution on that line only.
+- `:,3/let/const/` - 如果逗号前没有给出任何内容，则表示当前行。 从当前行替换为第3行。
+- `:1,s/let/const/` - 如果逗号后没有给出任何内容，则它也代表当前行。 从第1行替换为当前行。
+- `:3s/let/const/` - 如果仅给出一个值作为范围（不带逗号），则仅在该行进行替换。
 
-In Vim, `%` usually means the entire file. If you run `:%s/let/const/`, it will do substitution on all lines.
+在Vim中，`%`通常表示整个文件。 如果运行`:%s/let/const/`，它将在所有行上进行替换。
 
-# Pattern Matching
+#  模式匹配
 
-The next few sections will cover basic regular expressions.  A strong pattern knowledge is essential to master the substitute command.
+接下来的几节将介绍基本的正则表达式。 强大的模式知识对于掌握替代命令至关重要。
 
-If you have the following expressions:
+如果您具有以下表达式:
 
 ```
 let one = 1;
@@ -244,13 +272,13 @@ let four = 4;
 let five = 5;
 ```
 
-To add a pair of double quotes around the digits:
+要在数字周围添加一对双引号:
 
 ```
 :%s/\d/"\0"/
 ```
 
-The result:
+结果:
 ```
 let one = "1";
 let two = "2";
@@ -259,14 +287,14 @@ let four = "4";
 let five = "5";
 ```
 
-Let's break down the command:
-- `:%s` targets the entire file to perform substitution.
-- `\d` is Vim's predefined range for digits (`[0-9]`). 
-- `"\0"` the double quotes are literal double quotes. `\0` is a special character representing "the whole matched pattern". The matched pattern here is a single digit number, `\d`. On line one, `\0` has the value of "1". On line two, value of "2". On line three, value of "3", and so on.
+让我们分解一下命令:
+- `:%s` 定位整个文件以执行替换。
+- `\d` 是Vim的数字预定义范围(`[0-9]`)。
+- `"\0"` 双引号是文字双引号。 `\0`是一个特殊字符，代表“整个匹配模式"。 此处匹配的模式是单个数字`\d`。 在第一行，"\0"的值为"1"。 在第二行，值为"2"。 在第三行，值为"3"，依此类推。
 
-Alternatively, `&` also represents "the whole matched pattern" like `\0`. `:s/\d/"&"/` would have also worked.
+另外，“&"也代表"\ 0"之类的“整个匹配模式"。 `:s/\d/"&"/`也可以。
 
-Let's consider another example. Given these expressions:
+让我们考虑另一个例子。 给出以下表达式:
 ```
 one let = "1";
 two let = "2";
@@ -274,19 +302,19 @@ three let = "3";
 four let = "4";
 five let = "5";
 ```
-You need to swap all the "let" with the variable names. To do that, run:
+您需要用变量名交换所有的"let"。 为此，请运行:
 
 ```
 :%s/\(\w\+\) \(\w\+\)/\2 \1/
 ```
 
-The command above contains too many backslashes and is hard to read. It is more convenient to use the `\v` operator:
+上面的命令包含太多的反斜杠，很难阅读。 使用`\v`运算符更方便:
 
 ```
 :%s/\v(\w+) (\w+)/\2 \1/
 ```
 
-The result:
+结果:
 ```
 let one = "1";
 let two = "2";
@@ -295,27 +323,26 @@ let four = "4";
 let five = "5";
 ```
 
-Great! Let's break down that command:
-- `:%s` targets all the lines in the file
-- `(\w+) (\w+) `groups the patterns. `\w` is one of Vim's predefined ranges for a word character (`[0-9A-Za-z_]`). The `( )` surrounding it captures a word character match in a group. Notice the space between the two groupings. `(\w+) (\w+)` captures in two groups. On the first line, the first group captures "one" and the second group captures "two".
-- `\2 \1` returns the captured group in a reversed order. `\2` contains the captured string "let" and `\1` the string "one". Having `\2 \1` returns the string "let one".
+太好了！ 让我们分解该命令:
+- `:%s` 定位文件中的所有行
+- `(\w+) (\w+) `对模式进行分组。`\w`是Vim预定义的单词字符范围(`[0-9A-Za-z_]`)之一。 包围在其中的`（）`捕获一个单词字符匹配。 请注意两个分组之间的空间。 `(\w+) (\w+)` 分为两组。 在第一行上，第一组捕获“一个"，第二组捕获“两个"。
+- `\2 \1` 以相反的顺序返回捕获的组。 `\2`包含捕获的字符串"let"，而`\1`包含字符串"one"。 使`\2 \1`返回字符串"let one"。
 
-Recall that `\0` represents the entire matched pattern. You can break the matched string into smaller groups with `( )`. Each group is represented by `\1`, `\2`, `\3`, etc.
+回想一下`\0`代表整个匹配的模式。 您可以使用`( )`将匹配的字符串分成较小的组。 每个组都由`\1`, `\2`, `\3`等表示。
 
-Let's do one more example to solidify this matched group concept. If you have these numbers:
-
+让我们再举一个例子来巩固这一匹配组的概念。 如果您有以下数字:
 ```
 123
 456
 789
 ```
 
-To reverse the order, run:
+要颠倒顺序，请运行:
 ```
 :%s/\v(\d)(\d)(\d)/\3\2\1/
 ```
 
-The result is:
+结果是:
 
 ```
 321
@@ -323,88 +350,88 @@ The result is:
 987
 ```
 
-Each `(\d)` matches and groups each digit. On the first line, the first `(\d)` has a value of "1", the second `(\d)` "2", and the third `(\d)` "3". They are stored in the variables `\1`, `\2`, and `\3`. In the second half of your substitution, the new pattern `\3\2\1` results in the "321" value on line one.
+每个`(\d)`匹配并分组每个数字。 在第一行上，第一个`(\d)`的值为"1"，第二个`(\d)`的值为"2"，第三个`(\d)`的值为"3"。 它们存储在变量"\ 1"，"\ 2"和"\ 3"中。 在替换的后半部分，新模式`\3\2\1`在第一行上产生"321"值。
 
-If you had run this instead:
+如果您运行了它，则:
 ```
 :%s/\v(\d\d)(\d)/\2\1/
 ```
-You would have gotten a different result:
+您将获得不同的结果:
 ```
 312
 645
 978
 ```
 
-This is because you now only have two groups. The first group,captured by `(\d\d)`, is stored within `\1` and has the value of "12". The second group, captured by `(\d)`, is stored inside `\2` and has the value of "3". `\2\1` then, returns "312".
+这是因为您现在只有两个组。 被`(\d\d)`捕获的第一组存储在`\1`内，其值为"12"。 由`(\d)`捕获的第二组存储在`\2`内部，其值为"3"。 然后，`\2\1`返回"312"。
 
-# Substitution Flags
+# 替代标志
 
-If you have the sentence:
+如果您有以下句子:
 
 ```
 chocolate pancake, strawberry pancake, blueberry pancake
 ```
 
-To substitute all the pancakes into donuts, you cannot just run:
+要将所有pancakes替换为donut，您不能只运行:
 
 ```
 :s/pancake/donut
 ```
 
-The command above will only substitute the first match, giving you:
+上面的命令将仅替换第一个匹配项，从而为您提供:
 
 ```
 chocolate donut, strawberry pancake, blueberry pancake
 ```
 
-There are two ways to solve this. First, you can run the substitute command twice more. Second, you can pass it a global (`g`) flag to substitute all of the matches in a line. 
+有两种解决方法。 首先，您可以运行两次替代命令。 其次，您可以向其传递全局（g）标志来替换一行中的所有匹配项。
 
-Let's talk about the global flag. Run:
+让我们谈谈全局标志。 运行:
 
 ```
 :s/pancake/donut/g
 ```
 
-Vim substitutes all pancakes with donuts in one swift command. The global command is one of the several  flags the substitute command accepts. You pass flags at the end of the substitute command. Here is a list of useful flags:
+Vim迅速执行命令，将所有煎饼替换为甜甜圈。 全局命令是替代命令接受的几个标志之一。 您在替代命令的末尾传递标志。 这是有用的标志的列表:
 
 ```
-&    Reuse the flags from the previous substitute command. Must be passed as the first flag.
-g    Replace all matches in the line.
-c    Ask for substitution confirmation.
-e    Prevent error message from displaying when substitution fails.
-i    Perform case insensitive substitution
-I    Perform case sensitive substitution
+&    重用上一个替代命令中的标志。 必须作为第一个标志传递。
+g    替换行中的所有匹配项。
+c    要求替代确认。
+e    防止替换失败时显示错误消息。
+i    执行不区分大小写的替换
+I    执行区分大小写的替换
 ```
 
-There are more flags that I do not list above. To read about all the flags, check out `:h s_flags`.
+我上面没有列出更多标志。 要了解所有标志，请查看`:h s_flags`。
 
-By the way, the repeat-substitution commands (`&` and `:s`) do not retain the flags. Running `&` will only repeat `:s/pancake/donut/` without `g`. To quickly repeat the last substitute command with all the flags, run `:&&`.
+顺便说一句，重复替换命令（`&`和`:s`）不保留标志。 运行`&`只会重复`:s/pancake/donut/`而没有`g`。 要使用所有标志快速重复最后一个替代命令，请运行`:&&`。
 
-# Changing the Delimiter
+# 更改定界符
 
-If you need to replace a URL with a long path:
+如果您需要用长路径替换URL:
 
 ```
 https://mysite.com/a/b/c/d/e
 ```
 
-To substitute it with the word "hello", run:
+要用单词"hello"代替它，请运行:
 ```
 :s/https:\/\/mysite.com\/a\/b\/c\/d\/e/hello/
 ```
 
-However, it is hard to tell which forward slashes (`/`) are part of the substitution pattern and which ones are the delimiters. You can change the delimiter with any single-byte characters (except for alphabets, numbers, or `"`, `|`, and `\`). Let's replace them with `+`. The substitution command above then can be rewritten as:
+但是，很难说出哪些正斜杠（`/`）是替换模式的一部分，哪些是分隔符。 您可以使用任何单字节字符（除字母，数字或`“`，`|`和`\`之外的字符）来更改定界符。让我们将它们替换为`+`。上面的替换命令可以重写为 :
 
 ```
 :s+https:\/\/mysite.com\/a\/b\/c\/d\/e+hello+
 ```
 
-It is now easier to see where the delimiters are.
+现在，更容易看到分隔符在哪里。
 
-# Special Replace
+# 特殊替换
 
-You can also modify the case of the text you are substituting. Given the following expressions:
+您还可以修改要替换的文本的大小写。 给出以下表达式:
 
 ```
 let one = "1";
@@ -414,13 +441,13 @@ let four = "4";
 let five = "5";
 
 ```
-To uppercase the variables "one", "two", "three", etc., run:
+要大写变量“一个"，“两个"，“三个"等，请运行:
 
 ```
 %s/\v(\w+) (\w+)/\1 \U\2/
 
 ```
-You will get:
+你会得到:
 
 ```
 let ONE = "1";
@@ -430,42 +457,42 @@ let FOUR = "4";
 let FIVE = "5";
 ```
 
-Here is the breakdown of that command:
-- `(\w+) (\w+)` captures the first two matched groups, such as "let" and "one".
-- `\1` returns the value of the first group, "let"
-- `\U\2` uppercases (`\U`) the second group (`\2`).
+这是该命令的细分:
+-`(\w+) (\w+)`捕获前两个匹配的组，例如"let"和"one"。
+-`\1`返回第一个组的值"let"
+-`\U\2`大写(`\U`)第二组(`\2`)。
 
-The trick of this command is the expression `\U\2`. `\U` instructs the following character to be uppercased.
+该命令的窍门是表达式\ U \ 2。 \ U指示以下字符大写。
 
-Let's do one more example. Suppose you are writing a Vim book and you need to capitalize the first letter of each word in a line.
+让我们再举一个例子。 假设您正在编写Vim书籍，并且需要将一行中每个单词的首字母大写。
 
 ```
 vim is the greatest text editor in the whole galaxy
 ```
 
-You can run:
+您可以运行:
 
 ```
 :s/\<./\u&/g
 ```
 
-The result:
+结果:
 
 ```
 Vim Is The Greatest Text Editor In The Whole Galaxy
 ```
 
-Here is the breakdowns:
-- `:s` substitutes the current line
-- `\<.` is comprised of two parts: `\<` to match the start of a word and `.` to match any character. `\<` operator makes the following character to be the first character of a word. Since `.` is the next character, it will match the first character of any word.
-- `\u&`  uppercases the subsequent symbol, `&`. Recall that `&` (or `\0`) represents the whole match. It matches the first character of nay word.
-- `g` the global flag. Without it, this command only substitutes the first match. You need to substitute every match on this line.
+细目如下:
+-`:s`替换当前行
+-`\<。`由两部分组成:`\<`匹配单词的开头和`.`匹配任何字符。 "\ <"运算符使以下字符成为单词的第一个字符。 由于`.`是下一个字符，因此它将匹配任何单词的第一个字符。
+-`\u&`将后续符号`&`大写。 回想一下，“&"（或"\ 0"）代表整个比赛。 它与拒绝单词的第一个字符匹配。
+-`g`全局标志。 没有它，此命令将仅替换第一个匹配项。 您需要替换此行上的每个匹配项。
 
-To learn more of substitution's special replace symbols like `\u` and `\U`, check out `:h sub-replace-special`.
+要了解替换的特殊替换符号（如\ u和\ U）的更多信息，请查看`:h sub-replace-special`。
 
-# Alternative Patterns
+# 替代模式
 
-Sometimes you need to match multiple patterns simultaneously. If you have the following greetings:
+有时您需要同时匹配多个模式。 如果您有以下问候:
 
 ```
 hello vim
@@ -474,13 +501,13 @@ salve vim
 bonjour vim
 ```
 
-You need to substitute the word "vim" with "friend" but only on the lines containing the word "hello" or "hola". Run:
+您仅需在包含单词"hello"或"hola"的行上用"friend"代替"vim"。 执行:
 
 ```
 :%s/\v(hello|hola) vim)/\1 friend/g
 ```
 
-The result:
+结果:
 ```
 hello friend
 hola friend
@@ -488,18 +515,18 @@ salve vim
 bonjour vim
 ```
 
-Here is the breakdown:
-- `%s` runs the substitute command on each line in a file.
-- `(hello|hola)` Matches *either* "hello" or "hola" and consider it as a group.
-- `vim` is the literal word "vim".
-- `\1` is the first match group, which is either the text "hello" or "hola".
-- `friend` is the literal word "friend".
+这是细分:
+- `%s` 在文件的每一行上运行替代命令。
+- `(hello|hola)` 匹配*"hello"或"hola"并将其视为一个组。
+- `vim` 是字面意思"vim"。
+- `\1` 是第一个匹配组，它是文本"hello"或"hola"。
+- `friend` 是字面的“朋友"。
 
-# Substituting Across Multiple Files
+# 跨多个文件替换
 
-Finally, let's learn how to substitute phrases across multiple files. For this section, assume that you have two files: `food.txt` and `animal.txt`.
+最后，让我们学习如何在多个文件中替换短语。对于本节，假设您有两个文件: `food.txt` 和 `animal.txt`.
 
-Inside `food.txt`:
+ `food.txt`内:
 
 ```
 corn dog
@@ -507,7 +534,7 @@ hot dog
 chili dog
 ```
 
-Inside `animal.txt`:
+`animal.txt`内:
 
 ```
 large dog
@@ -515,53 +542,53 @@ medium dog
 small dog
 ```
 
-Assume your directory structure looks like this:
+假设您的目录结构如下所示:
 
 ```
 ├── food.txt
 ├── animal.txt
 ```
 
-First, capture both `food.txt` and `animal.txt` inside `:args`. Recall from earlier chapters that `:args` can be used to create a list of file names. There are several ways to do this from inside Vim:
+首先，在`:args`内同时捕获"food.txt"和"animal.txt"。回顾前面的章节，`:args`可用于创建文件名列表。在Vim内部有几种方法可以做到这一点:
 
 ```
-:args *.txt                  captures all txt files in current location 
-:args food.txt animal.txt    captures only index and server js files
-:args **/*.txt               captures every txt files
-:args **                     captures everything 
+:args *.txt                  捕获当前位置的所有txt文件
+:args food.txt animal.txt    仅捕获索引和服务器js文件
+:args **/*.txt               捕获每个txt文件
+:args **                     捕获一切
 ```
 
-You can also run the commands above from outside Vim, passing the files as *arguments* for Vim (hence it is called the "args" command). From the terminal, run 
+您也可以在Vim外部运行上述命令，将文件作为Vim的* arguments *传递（因此称为"args"命令）。 从终端运行 
 
 ```
 vim food.txt animal.txt
 ```
 
-When Vim starts, you will find `food.txt` and `animal.txt` inside `:args`.
+当Vim启动时，您将在`:args`中找到`food.txt`和`animal.txt`。
 
-Either way, when you run `:args`, you should see:
+无论哪种方式，当您运行`:args`时，您都应该看到:
 
 ```
 [food.txt] animal.txt
 ```
 
-To go to the next or previous argument on the list, type `:next` or `:previous`. Now that all the relevant files are stored inside the argument list, you can perform a multi-file substitution with the `:argdo` command. Run:
+要转到列表中的下一个或上一个参数，请输入`:next`或`:previous`。 现在所有相关文件都存储在参数列表中，您可以使用:argdo命令执行多文件替换。 执行:
 
 ```
 :argdo %s/dog/chicken/
 ```
 
-This performs substitution against the all files inside the  `:args` list. Finally, save the changed files with:
+这将对`:args`列表中的所有文件进行替换。 最后，使用以下命令保存更改的文件:
 
 ```
 :argdo update
 ```
 
-`:args` and `:argdo` are  useful tools to apply command line commands across multiple files. Try it with other commands!
+`:args`和`:argdo`是在多个文件之间应用命令行命令的有用工具。 与其他命令一起尝试！
 
-# Substituting Across Multiple Files with Macros
+# 用宏替换多个文件
 
-Alternatively, you can also run the substitute command across multiple files with macros. Let's start by getting the relevant files into the args list. Run:
+另外，您也可以跨多个带有宏的文件运行替代命令。 让我们从将相关文件放入args列表开始。 执行:
 
 ```
 :args animal.txt food.txt
@@ -572,18 +599,18 @@ q
 99@q
 ```
 
-Here is the breakdown of the steps:
-- `:args animal.txt food.txt` lists the relevant files into the `:args` list.
-- `qq` starts the macro in the "q" register.
-- `:%s/dog/chicken/g` substitutes "dog" with "chicken on all lines in the current file.
-- `:wnext` writes (saves) the file then go to the next file on the `args` list. It's like running `:w` and `:next` at the same time.
-- `q` stops the macro recording.
-- `99@q` executes the macro ninety-nine times. Vim will stop the macro execution after it encounters the first error, so Vim won't actually execute the macro ninety-nine times.
+以下是步骤的细分:
+-`:args animal.txt food.txt`会将相关文件列出到`:args`列表中。
+-`qq`启动"q"寄存器中的宏。
+-`:％s / dog / chicken / g在当前文件的所有行上用"chicken"替换"dog"。
+-`:wnext`写入（保存）文件，然后转到`args`列表中的下一个文件。就像同时运行`:w`和`:next`一样。
+-`q`停止宏录制。
+-"99 @ q"执行宏九十九次。 Vim遇到第一个错误后，它将停止执行宏，因此Vim实际上不会执行该宏九十九次。
 
-# Learning Search and Substitution the Smart Way
+# 以聪明的方式学习搜索和替换
 
-The ability to do search well is a necessary skill in editing. Mastering the search lets you to utilize the flexibility of regular expressions to search for any pattern in a file. Take your time to learn these. Actually do the searches and substitutions in this chapter yourself. I once read a book about regular expression without actually doing it and I forgot almost everything I read afterwards. Active coding is the best way to master any skill.
+做好搜索的能力是编辑的必要技能。掌握搜索功能使您可以利用正则表达式的灵活性来搜索文件中的任何模式。花些时间学习这些。实际上，您可以自己完成本章中的搜索和替换。我曾经读过一本关于正则表达式的书，却没有真正去做，后来我几乎忘了读的所有东西。主动编码是掌握任何技能的最佳方法。
 
-A good way to improve your pattern matching skill is whenever you need to search for a pattern (like "hello 123"), instead of querying for the literal search term (`/hello 123`), try to come up with a pattern for it (`/\v(\l+) (\d+)`). Many of these regular expression concepts are also applicable in general programming, not only when using Vim.
+一种提高模式匹配技能的好方法是，每当您需要搜索模式时（例如"hello 123"），而不是查询文字搜索字词（`/ hello 123`），都可以尝试为它（`/ \ v（\ l +）（\ d +）`）。这些正则表达式概念中的许多不仅在使用Vim时，也适用于常规编程。
 
-Now that you learned about advanced search and substitution in Vim, let's learn one of the most versatile commands, the global command.
+既然您已经了解了Vim中的高级搜索和替换，现在让我们学习功能最丰富的命令之一，即全局命令。
