@@ -78,6 +78,36 @@ To match both "hello" and  "hola", you can do `/hello\|hola`. You have to escape
 
 If you don't want to type `\|` every time, you can use the `magic` syntax (`\v`) at the start of the search: `/\vhello|hola`. I will not cover `magic` in this chapter, but with `\v`, you don't have to escape special characters anymore. To learn more about `\v`, feel free to check out `:h \v`.
 
+# Setting the Start and End of a Match
+
+Maybe you need to search for a text that is a part of a compound word. If you have these texts:
+
+```
+11vim22
+vim22
+11vim
+vim
+```
+
+If you need to select "vim" but only when it starts with "11" and ends with "22", you can use `\zs` (starting match) and `\ze` (ending match) operators. Run:
+
+```
+/11\zsvim\ze22
+```
+
+Vim still has to match the entire pattern "11vim22", but only highlights the pattern sandwiched between `\zs` and `\ze`. Another example:
+
+```
+foobar
+foobaz
+```
+
+If you need to search for the "foo" in "foobaz" but not in "foobar", run:
+
+```
+/foo\zebaz
+```
+
 # Searching Character Ranges
 
 All your search terms up to this point have been a literal word search. In real life, you may have to use a general pattern to find your text. The most basic pattern is the character range, `[ ]`.
