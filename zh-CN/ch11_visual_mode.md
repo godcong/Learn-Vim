@@ -1,9 +1,9 @@
-# 视觉模式
+＃视觉模式
 
 您可能知道您可以突出显示文本块并对其进行更改。 Vim也可以使用可视模式。 Vim有三种不同的视觉模式可供使用。在本章中，您将学习如何使用每种可视模式来有效地处理文本块。
 
-# The Three Types of Visual Modes
-The three modes are:
+＃三种视觉模式
+这三种模式是：
 
 ```
 v         角色视觉模式
@@ -18,32 +18,32 @@ two
 three
 ```
 
-逐字符可视模式用于选择单个字符。 Press `v` on the first character on the first line. Then go down to the next line with `j`. It highlights all texts from "one" up to your cursor location. Now if you press `gU`, Vim uppercases the highlighted characters.
+逐字符可视模式用于选择单个字符。在第一行的第一个字符上按`v`。然后使用`j`跳转至下一行。它突出显示从"one"到光标位置的所有文本。现在，如果您按`gU`，Vim将突出显示突出显示的字符。
 
-Line-wise visual mode works with line units. Press `V` and watch Vim selects the entire line your cursor is on. Just like character-wise visual mode, if you run `gU`, Vim uppercases the highlighted characters.
+逐行可视模式适用于线单位。按`V`并观看Vim选择光标所在的整行。就像逐字符可视模式一样，如果您运行`gU`，Vim将大写突出显示的字符。
 
-Block-wise visual mode works with rows and columns. It gives you more freedom to move around than the other two modes. Press `Ctrl-V`. Vim highlights the character under the cursor just like character-wise visual mode, except instead of highlighting each character until the end of the line before going to the next line, it can go to the next line without highlighting the entire character on the current line. Try moving around with `h/j/k/l` and watch the cursor movements. 
+逐块可视模式适用于行和列。与其他两种模式相比，它为您提供了更大的移动自由度。按`Ctrl-V`。 Vim像逐个字符可视模式一样突出显示光标下的字符，除了可以在下一行之前不突出显示每个字符直到行的末尾，它可以转到下一行而不突出显示当前行的整个字符。尝试用`h/j/k/l`移动，并观察光标的运动。
 
-On the bottom left of your Vim window, you will see either `-- VISUAL --`, `-- VISUAL LINE --`, or `-- VISUAL BLOCK --` displayed to indicate which visual mode you are in.
+在Vim窗口的左下方，您会看到显示`-- VISUAL --`，`-- VISUAL LINE --`或`-- VISUAL BLOCK --`以指示您所处的视觉模式。
 
-While you are inside a visual mode, you can switch to another visual mode by pressing either `v`, `V`, or `Ctrl-V`. For example, if you are in line-wise visual mode and you want to switch to block-wise visual mode, run `Ctrl-V`. Try it!
+当您处于视觉模式时，可以通过按`v`，`V`或`Ctrl-V`键切换到另一种视觉模式。例如，如果您处于逐行可视模式，并且想要切换为逐块可视模式，请运行`Ctrl-V`。试试吧！
 
-There are three ways to exit the visual mode: `esc`, `Ctrl-C`, and the same key as your current visual mode.
+有三种退出视觉模式的方法：`esc`，`Ctrl-C`和与当前视觉模式相同的键。
 
-What the latter one means is if you are currently in the line-wise visual mode (`V`), you can exit it by pressing `V` again. If you are in the character-wise visual mode, you can exit it by pressing `v`. If you are in the block-wise visual mode, press `Ctrl-V`.
+后者的意思是，如果您当前处于逐行可视模式(`V`)，则可以通过再次按`V`退出它。如果您处于字符可视模式，则可以通过按`v`退出它。如果您处于逐块可视模式，请按`Ctrl-V`。
 
-There is actually one more way to enter the visual mode:
+实际上，还有另一种进入可视模式的方式：
 ```
 gv    转到上一个视觉模式
 ```
 
-It will start the same visual mode on the same highlighted text block as you did last time.
+它将在与上次相同的突出显示的文本块上启动相同的可视模式。
 
-# Visual mode navigation
+＃视觉模式导航
 
-While in a visual mode, you can expand the highlighted text block with Vim motions.
+在可视模式下，您可以使用Vim动作扩展突出显示的文本块。
 
-Let's use the same text you used earlier:
+让我们使用之前使用的相同文本：
 
 ```
 one
@@ -51,7 +51,7 @@ two
 three
 ```
 
-This time let's start from the line "two". Press `v` to go to the character-wise visual mode:
+这次让我们从"two"行开始。按`v`进入字符可视模式：
 
 ```
 one
@@ -59,7 +59,7 @@ one
 three
 ```
 
-Press `j` and Vim will highlight all the text from the line "two" down to the first character of the line "three".
+按`j`，Vim将突出显示从"two"行到"three"行的第一个字符的所有文本。
 
 ```
 one
@@ -67,7 +67,7 @@ one
 t]hree
 ```
 
-Suppose you just realized that you also need to highlight the line "one" too, so you press `k`. To your dismay, it now excludes "three". Pressing `k` actually reduces the highlight, not expands it.
+假设您刚刚意识到还需要突出显示"one"行，因此按`k`。令您沮丧的是，它现在排除了"three"。按`k`实际上会还原高亮，而不是使其高亮。
 
 ```
 one
@@ -75,9 +75,9 @@ one
 three
 ```
 
-Is there a way to freely expand visual selection to go to any direction you want? 
+有没有一种方法可以自由地扩展视觉选择范围，以向您想要的任何方向发展？
 
-The answer is yes.  Let's back up a little bit to where you have the line "two" and "three" highlighted.
+答案是肯定的。让我们稍微备份一下突出显示"two"和"three"行的位置。
 
 ```
 one
@@ -85,7 +85,7 @@ one
 t]hree    <-- cursor
 ```
 
-Visual highlight follows the cursor movement. If you want to expand it upward to line "one", you need to move the cursor up when the cursor is on the letter "two", not "three". Right now your cursor is on the line "three". To move it, toggle the cursor location with either `o` or `O`.
+视觉高光跟随光标移动。如果要将其向上扩展到行"one"，则需要在光标位于字母"two"而不是"three"上时向上移动光标。现在，您的光标在"three"行上。要移动它，用`o`或`O`切换光标位置。
 
 ```
 one
@@ -93,7 +93,7 @@ one
 t]hree
 ```
 
-Now when you press `k`, it no longer reduces the selection, but expands it upward.
+现在，当您按`k`时，它不再缩小选择，而是向上扩展。
 
 ```
 [one
@@ -101,11 +101,11 @@ two
 t]hree
 ```
 
-# Visual Mode Grammar
+＃视觉模式语法
 
-Visual mode is one of Vim's modes. Being a mode means that the same key may work differently than in another mode. Luckily, visual mode shares many common keys with normal mode.
+可视模式是Vim的一种模式。成为一种模式意味着同一键的工作方式可能不同于另一种模式。幸运的是，可视模式与普通模式共享许多常用键。
 
-For example, if you have the text:
+例如，如果您有以下文字：
 
 ```
 one
@@ -113,54 +113,54 @@ two
 three
 ```
 
-Highlight the lines "one" and "two" with the line-wise visual mode (`V`):
+用逐行可视模式(`V`)突出显示"one"和"two"行：
 ```
 [one
 two]
 three
 ```
 
-Pressing `d` will delete the selection, similar to normal mode. Notice the grammar rule from normal mode, verb + noun, does not apply. The same verb is still there (`d`), but there is no noun in visual mode. The grammar rule in visual mode is noun + verb, where noun is the highlighted text. Select the text block first, then operate.
+按下`d`键将删除选择，类似于普通模式。请注意，普通模式的语法规则动词+名词不适用。仍然存在相同的动词(`d`)，但在视觉模式下没有名词。可视模式下的语法规则是名词+动词，其中名词是突出显示的文本。首先选择文本块，然后进行操作。
 
-In normal mode, there are some commands that do not require a motion, like `x` to delete a single character under the cursor and `rx` to replace the character under the cursor with "x". In visual mode, these commands are now being applied to the entire highlighted text instead of a single character. Back at the highlighted text:
+在普通模式下，有一些命令不需要移动，例如`x`删除光标下方的单个字符，`rx`替换光标下方的字符为`x`。在可视模式下，这些命令现在将应用于整个突出显示的文本，而不是单个字符。返回突出显示的文本：
 ```
 [one
 two]
 three
 ```
 
-Running `x` deletes all highlighted texts.
+运行`x`会删除所有突出显示的文本。
 
-You can use this behavior to quickly create a header in markdown text. Suppose you have a text in a markdown file:
+您可以使用此行为在降价文本中快速创建标题。假设您在markdown文件中有一个文本：
 ```
 Chapter One
 ```
 
-You need to quickly turn this header into a header. First you copy the text with `yy`, then paste it with `p`:
+您需要快速将此标题转换为标题。首先，您使用`yy`复制文本，然后使用`p`粘贴文本：
 ```
 Chapter One
 Chapter One
 ```
 
-Now go to the second line, select it with line-wise visual mode:
+现在转到第二行，以逐行可视模式选择它：
 ```
 Chapter One
 [Chapter One]
 ```
 
-In markdown you can create a header by adding  a series of `=` below a text, so you will replace the entire highlighted text by running `r=`:
+在markdown中，您可以通过在文本下方添加一系列`=`来创建标题，因此您可以通过运行`r=`来替换整个突出显示的文本：
 
 ```
 Chapter One
 ===========
 ```
 
-To learn more about operators in visual mode, check out `:h visual-operators`.
+要了解有关可视模式下的运算符的更多信息，请查看`:h visual-operators`。
 
 
-# Visual Mode and Ex Commands
+＃可视模式和Ex命令
 
-You can selectively apply Ex commands on a highlighted text block. If you have these expressions:
+您可以有选择地在突出显示的文本块上应用Ex命令。如果您具有以下表达式：
 
 ```
 const one = "one";
@@ -168,17 +168,17 @@ const two = "two";
 const three = "three";
 ```
 
-You need to substitute only the first two lines of "const" with "let". Highlight the first two lines with *any* visual mode and run the substitute command `:s/const/let/g`:
+您只需要用"let"替换"const"的前两行。用*任何*可视模式突出显示前两行，然后运行替代命令`:s/const/let/g`：
 ```
 let one = "one";
 let two = "two";
 const three = "three";
 ```
-Notice I said you can do this with *any* visual mode. You do not have to highlight the entire line to run Ex command on that line. As long as you select at least a character on each line, the Ex command will be applied.
+请注意，我说过您可以使用*任何*可视模式执行此操作。您不必突出显示整个行即可在该行上运行Ex命令。只要您在每行上至少选择一个字符，就会应用Ex命令。
 
-# Editing Across Multiple Lines 
+＃跨多行编辑
 
-You can edit text across multiple lines in Vim using the block-wise visual mode. If you need to add a semicolon at the end of each line:
+您可以使用逐块可视模式在Vim中跨多行编辑文本。如果需要在每行末尾添加分号：
  
 ```
 const one = "one"
@@ -186,26 +186,26 @@ const two = "two"
 const three = "three"
 ```
 
-With your cursor on the first line:
-- Run block-wise visual mode and go down two lines (`Ctrl-V jj`).
-- Highlight to the end of the line (`$`).
-- Append (`A`) then type ";".
-- Exit visual mode (`esc`).
+将光标放在第一行上：
+-运行逐块可视模式，并向下两行(`Ctrl-V jj`)。
+-高亮显示到行尾(`$`)。
+-附加(`A`) ，然后键入";"。
+-退出可视模式(`esc`)。
 
-You should see the appended ";" on each line. By the way, while in block-wise visual mode, to enter the insert mode, you can use either `A` to enter the text after the cursor or `I` to enter the text before the cursor. Do not confuse them with `A` and `I` from normal mode.
+您应该看到附加的 ";" 在每一行上。顺便说一下，在逐块可视模式下，要进入插入模式，可以使用`A`在光标后输入文本，也可以使用`I`在光标前输入文本。请勿将它们与正常模式下的`A`和`I`混淆。
 
-Alternatively, you can also use the `:normal` command:
+另外，您也可以使用`:normal`命令：
 
-- Highlight all 3 lines (`vjj`).
-- Type `:normal! A;`.
+-高亮显示所有3行(`vjj`)。
+-输入`:normal! A;`。
 
-Remember, `:normal` command executes normal mode commands. You can instruct it to run `A;` to append text ";" at the end of the line. 
+记住，`:normal`命令执行普通模式命令。您可以指示它运行`A;`来添加文本";"在该行的末尾。
 
-# Incrementing numbers
+＃递增数字
 
-Vim has `Ctrl-X` and `Ctrl-A` commands to decrement and increment numbers. When used with visual mode, you can increment numbers across multiple lines.
+Vim有`Ctrl-X`和`Ctrl-A`命令来减少和增加数字。与可视模式一起使用时，可以跨多行递增数字。
 
-If you have these HTML elements:
+如果您具有以下HTML元素：
 ```
 <div id="app-1"></div>
 <div id="app-1"></div>
@@ -214,12 +214,12 @@ If you have these HTML elements:
 <div id="app-1"></div>
 ```
 
-It is a bad practice to have several ids having the same name, so let's increment them to make them unique:
-- Move your cursor to the *second* "1".
-- Start block-wise visual mode and go down 3 lines (`Ctrl-V 3j`). This highlights the remaining  "1"s.
-- Run `g Ctrl-A`.
+有多个具有相同名称的id是一个不好的做法，因此让我们对其进行递增以使其唯一：
+-将光标移动到*第二个*"1"。
+-启动逐块可视模式，并向下移动3行(`Ctrl-V 3j`)。这突出显示剩余的"1"s。
+-运行`g Ctrl-A`。
 
-You should see this result:
+您应该看到以下结果：
 ```
 <div id="app-1"></div>
 <div id="app-2"></div>
@@ -228,13 +228,13 @@ You should see this result:
 <div id="app-5"></div>
 ```
 
-`g Ctrl-A` increments numbers on multiple lines. `Ctrl-X/Ctrl-A` can increment letters too. If you run:
+`g Ctrl-A`在多行上递增数字。 `Ctrl-X/Ctrl-A`也可以增加字母。如果您运行：
 
 ```
 :set nrformats+=alpha
 ```
 
-The `nrformats` option instructs Vim which bases are considered as "numbers" for `Ctrl-A` and `Ctrl-X` to increment and decrement. By adding `alpha`, an alphabetical character is now considered as a number. If you have the following HTML elements:
+`nrformats`选项指示Vim将哪个基数视为`Ctrl-A`和`Ctrl-X`递增和递减的“数字”。通过添加`alpha`，现在将字母字符视为数字。如果您具有以下HTML元素：
 ```
 <div id="app-a"></div>
 <div id="app-a"></div>
@@ -243,7 +243,7 @@ The `nrformats` option instructs Vim which bases are considered as "numbers" for
 <div id="app-a"></div>
 ```
 
-Put your cursor on the second "app-a". Use the same technique as above (`Ctrl-V 3j` then `g Ctrl-A`) to increment the ids.
+将光标放在第二个"app-a"上。使用与上述相同的技术(`Ctrl-V 3j` 然后 `g Ctrl-A`)增加ID。
 ```
 <div id="app-a"></div>
 <div id="app-b"></div>
@@ -251,56 +251,56 @@ Put your cursor on the second "app-a". Use the same technique as above (`Ctrl-V 
 <div id="app-d"></div>
 <div id="app-e"></div>
 ```
-# Selecting the Last Visual Mode Area
+＃选择最后一个视觉模式区域
 
-You learned that `gv` can quickly highlight the last visual mode highlight. You can also go to the location of the start and the end of the last visual mode with these two special marks:
+您了解到`gv`可以快速突出显示上一个可视模式。您还可以使用以下两个特殊标记转到最后一个可视模式的开始和结束位置：
 
 ```
 `<    转到上一个视觉模式突出显示的最后一个位置
 `>    转到上一个视觉模式突出显示的第一位
 ```
 
-I want you to observe something. Earlier, I mentioned that you can selectively execute Ex commands on a highlighted text, like `:s/const/let/g`. When you did that, you should see this:
+我要你观察一些东西。之前，我提到过您可以在突出显示的文本上有选择地执行Ex命令，例如：`:s/const/let/g`。当您这样做时，您应该看到以下内容：
 ```
 :`<,`>s/const/let/g
 ```
 
-You were actually executing `s/const/let/g` command using marks as range. You can always edit these marks anytime you wish. If instead you needed to substitute from the start of the highlighted text to the end of the file, you just change the command line to:
+您实际上是在使用标记作为范围来执行`s/const/let/g`命令。您随时可以随时编辑这些标记。相反，如果您需要从突出显示的文本的开头到文件的末尾进行替换，则只需将命令行更改为：
 ```
 :`<,$s/const/let/g
 ```
 
-# Entering Visual Mode from Insert Mode
+＃从插入模式进入可视模式
 
-You can also enter visual mode from the insert mode. To go to character-wise visual mode while you are in insert mode:
+您也可以从插入模式进入可视模式。在插入模式下进入字符可视模式：
 
 ```
 Ctrl-O v
 ```
 
-Recall that running `Ctrl-O` while in the insert mode lets you to execute a normal mode command. While in this normal-mode-command-pending mode, run `v` to enter character-wise visual mode. Notice that on the bottom left of the screen, it says `--(insert) VISUAL--`. This trick works with any visual mode operator: `v`, `V`, and `Ctrl-V`.
+回想一下，在插入模式下运行`Ctrl-O`可以使您执行普通模式命令。在正常模式命令挂起模式下，运行`v`进入逐字可视模式。请注意，在屏幕的左下方，它显示为`--(insert) VISUAL--`。该技巧适用于任何视觉模式运算符：`v`，`V`，和`Ctrl-V`。
 
-# Select Mode
+＃ 选择模式
 
-Vim has a mode similar to visual mode called the *select mode*. Like visual mode, it also has three different modes:
+Vim具有类似于可视模式的模式，称为*选择模式*。与可视模式一样，它也具有三种不同的模式：
 ```
-gh         Character-wise select mode
-gH         Line-wise select mode
-gCtrl-h    Block-wise select mode
+gh         逐字符选择模式
+gH         逐行选择模式
+gCtrl-h    逐块选择模式
 ```
 
-Select mode emulates a regular editor's text highlighting behavior closer than Vim's visual mode does. 
+选择模式比Vim的可视模式更接近常规编辑器的文本突出显示行为。
 
-In a regular editor, after you highlight a text block and type a letter, say the letter "y", it will delete the highlighted text and insert the letter "y".
+在常规编辑器中，突出显示文本块并键入字母（例如字母"y"）后，它将删除突出显示的文本并插入字母"y"。
 
-If you highlight a line of text with line-wise select mode (`gH`) and type "y", it will delete the highlighted text and insert the letter "y", much like the regular text editor.
+如果您使用逐行选择模式(`gH`)高亮显示一行文本并键入"y"，它将删除突出显示的文本并插入字母"y"，这与常规文本编辑器非常相似。
 
-Contrast this behavior with visual mode: if you  highlight a line of text with line-wise visual mode (`V`) and type "y", the highlighted text will not be deleted and replaced by the literal letter "y". It will only be yanked and stored in the yanked register `"0`.
+将此行为与可视模式进行对比：如果您使用逐行可视模式(`V`)高亮显示一行文本并键入"y"，则高亮显示的文本不会被删除，而是由文字字母"y"代替。仅将其拉动并存储在拉动寄存器`"0`中。
 
-I personally never used select mode, but it's good to know that it exists.
+我个人从未使用过选择模式，但是很高兴知道它的存在。
 
-# Learn Visual Mode the Smart Way
+＃以聪明的方式学习视觉模式
 
-The visual mode is Vim's representation of the text highlighting procedure. 
+可视模式是Vim突出显示文本的过程。
 
-If you find yourself using visual mode operation far more often than normal mode operations, be careful. I think this is an anti-pattern. It takes more keystrokes to run a visual mode operation than its normal mode counterpart. If you need to delete an inner word, why use four keystrokes, `viwd` (visually highlight an inner word then delete), if you can accomplish it with just three keystrokes (`diw`)? The latter is more direct and concise. Of course, there will be times when visual modes are appropriate, but in general, favor a more direct approach.
+如果发现使用视觉模式操作的频率比正常模式操作的频率高得多，请当心。我认为这是一种反模式。运行可视模式操作所需的击键次数要多于普通模式下的击键次数。如果您需要删除一个内部单词，那么为什么只用三个按键(`diw`)就可以使用四个按键`viwd`（在视觉上突出显示一个内部单词然后删除）呢？后者更为直接和简洁。当然，有时会使用适当的视觉模式，但总的来说，更倾向于直接的方法。
