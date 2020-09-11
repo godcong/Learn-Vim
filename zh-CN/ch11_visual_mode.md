@@ -1,24 +1,24 @@
-# Visual Mode
+# 视觉模式
 
-You probably know that you can highlight a block of text and apply changes to it. Vim can too, with visual mode. Vim has three different visual modes to use. In this chapter, you will learn how to use each visual mode to manipulate blocks of texts efficiently.
+您可能知道您可以突出显示文本块并对其进行更改。 Vim也可以使用可视模式。 Vim有三种不同的视觉模式可供使用。在本章中，您将学习如何使用每种可视模式来有效地处理文本块。
 
 # The Three Types of Visual Modes
 The three modes are:
 
 ```
-v         Character-wise visual mode
-V         Line-wise visual mode
-Ctrl-v    Block-wise visual mode
+v         角色视觉模式
+V         逐行可视模式
+Ctrl-v    逐块可视模式
 ```
 
-If you have the text:
+如果您有文字：
 ```
 one
 two
 three
 ```
 
-Character-wise visual mode is used to select individual characters. Press `v` on the first character on the first line. Then go down to the next line with `j`. It highlights all texts from "one" up to your cursor location. Now if you press `gU`, Vim uppercases the highlighted characters.
+逐字符可视模式用于选择单个字符。 Press `v` on the first character on the first line. Then go down to the next line with `j`. It highlights all texts from "one" up to your cursor location. Now if you press `gU`, Vim uppercases the highlighted characters.
 
 Line-wise visual mode works with line units. Press `V` and watch Vim selects the entire line your cursor is on. Just like character-wise visual mode, if you run `gU`, Vim uppercases the highlighted characters.
 
@@ -34,7 +34,7 @@ What the latter one means is if you are currently in the line-wise visual mode (
 
 There is actually one more way to enter the visual mode:
 ```
-gv    Go to the previous visual mode
+gv    转到上一个视觉模式
 ```
 
 It will start the same visual mode on the same highlighted text block as you did last time.
@@ -256,8 +256,8 @@ Put your cursor on the second "app-a". Use the same technique as above (`Ctrl-V 
 You learned that `gv` can quickly highlight the last visual mode highlight. You can also go to the location of the start and the end of the last visual mode with these two special marks:
 
 ```
-`<    Go to the last place of the previous visual mode highlight
-`>    Go to the first place of the previous visual mode highlight
+`<    转到上一个视觉模式突出显示的最后一个位置
+`>    转到上一个视觉模式突出显示的第一位
 ```
 
 I want you to observe something. Earlier, I mentioned that you can selectively execute Ex commands on a highlighted text, like `:s/const/let/g`. When you did that, you should see this:
